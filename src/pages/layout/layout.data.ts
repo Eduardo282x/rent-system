@@ -11,18 +11,23 @@ export const menu: IMenu[] = [
         icon: 'home'
     },
     {
-        title: 'Ventas',
+        title: 'Inmobiliarias',
         redirect: '/casas',
+        icon: 'apartment'
+    },
+    {
+        title: 'Ventas',
+        redirect: '/ventas',
         icon: 'real_estate_agent'
     },
     {
         title: 'Clientes',
-        redirect: '/casas',
+        redirect: '/clientes',
         icon: 'group'
     },
     {
         title: 'Usuarios',
-        redirect: '/casas',
+        redirect: '/usuarios',
         icon: 'group'
     }
 ]
