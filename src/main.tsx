@@ -8,3 +8,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <App />
   </React.StrictMode>,
 )
+
+//npm i axios material-icons react-hook-form react-router-dom zod @hookform/resolvers
