@@ -6,24 +6,14 @@ export interface IMenu {
 
 export const menu: IMenu[] = [
     {
-        title: 'Casas',
-        redirect: '/casas',
+        title: 'Propiedades',
+        redirect: '/home',
         icon: 'home'
     },
     {
-        title: 'Inmobiliarias',
+        title: 'Contratos',
         redirect: '/casas',
-        icon: 'apartment'
-    },
-    {
-        title: 'Ventas',
-        redirect: '/ventas',
-        icon: 'real_estate_agent'
-    },
-    {
-        title: 'Clientes',
-        redirect: '/clientes',
-        icon: 'group'
+        icon: 'description'
     },
     {
         title: 'Usuarios',

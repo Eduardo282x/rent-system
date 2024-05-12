@@ -1,0 +1,14 @@
+.logo{
+    background-image: url('../../assets/images/simple-icon.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 6rem;
+    height: 4rem;
+    filter: invert(100%) sepia(0%) saturate(7498%) hue-rotate(168deg) brightness(100%) contrast(103%);
+}
+
+.textLogo{
+    font-weight: bold;
+    letter-spacing: 1rem;
+}
