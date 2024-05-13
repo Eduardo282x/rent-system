@@ -13,7 +13,7 @@ export const Cards: FC<ICards> = ({ imagesUrl, price, location, dorm, bath, sque
 
   return (
     <section className='w-[16rem] flex flex-col items-start justify-center bg-white text-white text-black rounded-md m-2'>
-      <article className={`bg-[url('${imagesUrl}')] bg-cover bg-no-repeat bg-center w-full h-[15rem] rounded-md flex items-end justify-start p-2`}>
+      <article style={{backgroundImage: `url(${imagesUrl})`}} className={`bg-cover bg-no-repeat bg-center w-full h-[15rem] rounded-md flex items-end justify-start p-2`}>
         <p className=" font-bold ">{nameHouse}</p>
       </article>
       <article className="flex flex-col items-start justify-start w-full p-2 text-black">

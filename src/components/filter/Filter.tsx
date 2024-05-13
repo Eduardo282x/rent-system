@@ -15,7 +15,7 @@ export const Filter = () => {
 
     const [type, setType] = React.useState('');
     const [location, setLocation] = React.useState('');
-    const [value, setValue] = React.useState<number[]>([20, 37]);
+    const [value, setValue] = React.useState<number[]>([0, 1000]);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number[]);
@@ -73,21 +73,22 @@ export const Filter = () => {
                         <MenuItem value={2}>San Francisco</MenuItem>
                     </Select>
                 </FormControl>
-                <Box sx={{ width: 200 }}>
+                <Box sx={{ width: 250 }}>
                     <p>Rango de precio</p>
                     <div className="flex items-center justify-center gap-5">
-                        <p>{value[0]}$</p>
+                        <p className='w-[5rem]'>{value[0]}$</p>
                         <Slider
                             getAriaLabel={() => 'Temperature range'}
                             value={value}
                             onChange={handleChange}
                             valueLabelDisplay="auto"
+                            color=''
                             step={50}
                             min={0}
                             max={1000}
                             getAriaValueText={valuetext}
                         />
-                        <p>{value[1]}$</p>
+                        <p >{value[1]}$</p>
                     </div>
                 </Box>
             </div>

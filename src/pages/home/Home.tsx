@@ -9,15 +9,15 @@ export const Home = () => {
             <Filter></Filter>
             <div className='flex flex-wrap gap-5 items-center justify-center overflow-x-hidden my-5'>
                 {homes.map((ho: ICards, index: number) => (
-                    <Cards 
-                    key={index} 
-                    nameHouse={ho.nameHouse}
-                    imagesUrl={ho.imagesUrl}
-                    bath={ho.bath}
-                    dorm={ho.dorm}
-                    price={ho.price}
-                    location={ho.location}
-                    squeareMeter={ho.squeareMeter}
+                    <Cards
+                        key={index}
+                        nameHouse={ho.nameHouse}
+                        imagesUrl={ho.imagesUrl}
+                        bath={ho.bath}
+                        dorm={ho.dorm}
+                        price={ho.price}
+                        location={ho.location}
+                        squeareMeter={ho.squeareMeter}
                     ></Cards>
 
                 ))}

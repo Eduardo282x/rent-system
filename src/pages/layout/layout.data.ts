@@ -12,7 +12,7 @@ export const menu: IMenu[] = [
     },
     {
         title: 'Contratos',
-        redirect: '/casas',
+        redirect: '/contratos',
         icon: 'description'
     },
     {
