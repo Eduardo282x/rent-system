@@ -1,22 +1,45 @@
-import { useForm } from "react-hook-form"
-import { defaultValues, loginValidationSchame, UserLogin } from "./login.data"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react";
-import './login.css'
+import { defaultValues, loginValidationSchame, UserLogin } from "./login.data";
+import { ResponseLogin } from "../../interfaces/base-response.interface";
+import { postDataApi } from "../../backend/baseAxios";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import Snackbar from '@mui/material/Snackbar';
+import { useForm } from "react-hook-form"
+import { useState } from "react";
+import './login.css';
+
 export const Login = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>('');
+    const [open, setOpen] = useState<boolean>(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     const { register, handleSubmit } = useForm<UserLogin>({
         defaultValues,
         resolver: zodResolver(loginValidationSchame)
     })
 
-    const onSubmit = (login: UserLogin) => {
-        console.log(login);
-        if (login) {
-            navigate('/home');
+    const onSubmit = async (login: UserLogin) => {
+        const responseLogin: ResponseLogin = await postDataApi('auth', login) as ResponseLogin;
+        handleClick();
+        setMessage(responseLogin.message);
+        if (responseLogin.success) {
+            localStorage.setItem('token', JSON.stringify(responseLogin.token));
+            setTimeout(() => {
+                navigate('/home');
+            }, 2000);
         }
     }
 
@@ -42,6 +65,14 @@ export const Login = () => {
                     </button>
                 </form>
             </div>
+
+            <Snackbar
+                open={open}
+                autoHideDuration={2000}
+                onClose={handleClose}
+                message={message}
+                anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+            />
         </div>
     )
 }

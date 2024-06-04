@@ -5,6 +5,11 @@ export const Navbar = () => {
 
     const navigate = useNavigate();
 
+    const logout = () => {
+        navigate('/');
+        localStorage.removeItem('token');
+    }
+
     return (
         <div className='w-full h-full flex items-center justify-between px-4 py-4'>
             <div className="flex items-center justify-center h-full">
@@ -19,7 +24,7 @@ export const Navbar = () => {
                         <p>{me.title}</p>
                     </button>
                 ))}
-                <button  onClick={() => navigate('/')}className="hover:bg-gray-800 rounded-xl flex items-center justify-center p-2 transition-all gap-2">
+                <button  onClick={logout}className="hover:bg-gray-800 rounded-xl flex items-center justify-center p-2 transition-all gap-2">
                     <span className="material-icons">logout</span>
                     <p>Cerrar sesión</p>
                 </button>
