@@ -3,25 +3,25 @@ import { IColumns } from "../../components/table/table.data";
 export const columnsUsers: IColumns[] = [
     {
         header: 'Nombre',
-        column: 'name',
+        column: 'Name',
         type: 'text',
         filterOption: true,
     },
     {
         header: 'Apellido',
-        column: 'lastname',
+        column: 'Lastname',
         type: 'text',
         filterOption: true,
     },
     {
         header: 'Cédula',
-        column: 'identify',
+        column: 'Identify',
         type: 'text',
         filterOption: true,
     },
     {
-        header: 'Dirección',
-        column: 'address',
+        header: 'Rol',
+        column: 'rolDes',
         type: 'text',
         filterOption: true,
     },

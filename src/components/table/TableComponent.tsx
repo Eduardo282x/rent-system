@@ -52,7 +52,6 @@ export const TableComponent: FC<ITable> = ({ dataTable, columns }) => {
         }
     };
 
-
     useEffect(() => {
         setDataFilter(dataTable);
     }, [dataTable]);
@@ -61,12 +60,12 @@ export const TableComponent: FC<ITable> = ({ dataTable, columns }) => {
         <div className='w-full  flex flex-col items-center justify-center p-8 gap-4 rounded-xl shadow-2xl h-full'>
 
             <div className="flex items-center justify-between w-full">
-                <div className=" text-black text-2xl">
+                <div className="text-white text-2xl">
                     Tabla
                 </div>
                 <div className="flex items-center justify-center h-full gap-2">
 
-                    <div className="w-[18rem] bg-white rounded-xl p-1">
+                    <div className="w-[20rem] bg-white rounded-xl p-1">
                         <div className={`flex items-center justify-between rounded-md h-12 w-full`}>
                             <input placeholder='Buscar' onChange={onFilter} type="text" className="text-black p-2 bg-transparent outline-none w-[85%] h-full" />
                             <span className="material-icons mr-[4%] -ml-[4%]">search</span>

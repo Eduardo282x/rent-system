@@ -12,7 +12,7 @@ export const Navbar = () => {
 
     return (
         <div className='w-full h-full flex items-center justify-between px-4 py-4'>
-            <div className="flex items-center justify-center h-full">
+            <div className="flex items-center justify-center h-full cursor-pointer" onClick={() => navigate('/home')}>
                 <div className="logo"></div>
                 <p className="textLogo">INSICA</p>
             </div>

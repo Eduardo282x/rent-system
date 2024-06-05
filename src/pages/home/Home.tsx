@@ -24,13 +24,7 @@ export const Home = () => {
                 {properties.map((pro: Properties, index: number) => (
                     <Cards
                         key={index}
-                        nameHouse={pro.NameRent}
-                        imagesUrl={pro.Images}
-                        bath={pro.Bathrooms}
-                        dorm={pro.Rooms}
-                        price={pro.Price}
-                        location={pro.Address}
-                        squeareMeter={pro.SquareMeters}
+                        property={pro}
                     ></Cards>
 
                 ))}
