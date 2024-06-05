@@ -29,7 +29,7 @@ export const Cards: FC<ICards> = ({ imagesUrl, price, location, dorm, bath, sque
 
           <div className="flex flex-col items-center justify-center">
             <span className="material-icons">bed</span>
-            {dorm} dormi
+            {dorm} dormitorios
           </div>
 
           <div className="flex flex-col items-center justify-center">
@@ -46,7 +46,6 @@ export const Cards: FC<ICards> = ({ imagesUrl, price, location, dorm, bath, sque
 
 
           <div className="flex items-center justify-center text-xl">
-            {/* <span className="material-icons">attach_money</span> */}
             {formatMoney(price)}$
           </div>
 
