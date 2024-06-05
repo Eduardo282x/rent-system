@@ -13,3 +13,7 @@ export const filterBase: IFilter = {
     location: '',
     price: [0, 1000]
 }
+
+export interface PropsFilter {
+    btnFunc: () => void;
+}

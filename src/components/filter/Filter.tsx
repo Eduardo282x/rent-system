@@ -1,14 +1,14 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { filterBase, IFilter, valuesFilter } from './filter.data';
+import { filterBase, IFilter, PropsFilter, valuesFilter } from './filter.data';
 
 
-export const Filter = () => {
+export const Filter: FC<PropsFilter> = ({btnFunc}) => {
     const [filter, setFilter] = React.useState<IFilter>(filterBase);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
@@ -59,7 +59,7 @@ export const Filter = () => {
                     </div>
                 </div>
 
-                <button className="w-auto flex items-center justify-center rounded-md text-white font-bold p-2 gap-2 hover:bg-[#2c567c] transition-all">
+                <button onClick={btnFunc} className="w-auto flex items-center justify-center rounded-md text-white font-bold p-2 gap-2 hover:bg-[#2c567c] transition-all">
                     Agregar Propiedad
                     <span className="material-icons">add_circle</span>
                 </button>
@@ -101,6 +101,7 @@ export const Filter = () => {
                         <Slider
                             value={filter.price}
                             onChange={handleChange}
+                            // color="''"
                             valueLabelDisplay="auto"
                             step={50}
                             min={0}

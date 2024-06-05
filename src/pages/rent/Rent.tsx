@@ -1,36 +1,17 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getDataApi } from "../../backend/baseAxios";
-import { IRegisterClient, Properties } from "../../interfaces/rent.interface";
+import { Properties } from "../../interfaces/rent.interface";
 import { formatMoney } from "../../components/cards/cards.data";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { defaultValues, registerClientValidationSchame } from "./rent.data";
+import { FormRent } from "../../components/formRent/FormRent";
 
 type orientationType = 'back' | 'next';
 
 export const Rent = () => {
-
+  const navigate = useNavigate();
   const { id } = useParams();
   const [rent, setRent] = useState<Properties>();
   const [imageSelected, setImageSelected] = useState<number>(0);
-
-  const { register, handleSubmit } = useForm<IRegisterClient>({
-    defaultValues,
-    resolver: zodResolver(registerClientValidationSchame)
-  })
-  const onSubmit = async (client: IRegisterClient) => {
-    console.log(client);
-    // const responseLogin: ResponseLogin = await postDataApi('auth', client) as ResponseLogin;
-    // handleClick();
-    // setMessage(responseLogin.message);
-    // if (responseLogin.success) {
-    //   localStorage.setItem('token', JSON.stringify(responseLogin.token));
-    //   setTimeout(() => {
-    //     navigate('/home');
-    //   }, 2000);
-    // }
-  }
 
   const getOneRent = async (id: string) => {
     setRent(await getDataApi(`rent/${id}`));
@@ -56,7 +37,10 @@ export const Rent = () => {
   }, [])
 
   return (
-    <div className='flex items-start justify-center gap-5 w-full h-auto pt-16 px-8 bg-white'>
+    <div className='flex items-start justify-center relative gap-5 w-full h-auto pt-16 px-8 bg-white'>
+      <div onClick={() => navigate(-1)}  className="absolute top-4 left-8 text-black  flex items-center justify-center cursor-pointer">
+        <span className="material-icons">arrow_back</span> Volver
+      </div>
       <div className="flex flex-col items-center justify-center w-[60%] h-full">
         <article style={{ backgroundImage: `url(${rent?.Images})` }} className={`bg-cover bg-no-repeat bg-center w-full h-[35rem]`}>
         </article>
@@ -103,32 +87,7 @@ export const Rent = () => {
           </div>
         </div>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col rounded-xl gap-5 items-center text-xl justify-around py-8 w-[40%] bg-[#0a2647] h-[40rem]">
-        <h1 className="text-3xl font-bold">Registro del cliente</h1>
-
-        <div className="px-8 flex flex-col justify-center items-start gap-2 w-full">
-          <label className='ml-1'>Nombre y apellido</label>
-          <input type="text" placeholder="Nombre y apellido" className="bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none"  {...register('fullName')} />
-        </div>
-
-        <div className="px-8 flex flex-col justify-center items-start gap-2 w-full">
-          <label className='ml-1'>Cédula</label>
-          <input type="text" placeholder="Cédula" className="bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none"  {...register('identify')} />
-        </div>
-
-        <div className="px-8 flex flex-col justify-center items-start gap-2 w-full">
-          <label className='ml-1'>Teléfono</label>
-          <input type="text" placeholder="Teléfono" className="bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none"  {...register('phone')} />
-        </div>
-
-        <div className="px-8 flex flex-col justify-center items-start gap-2 w-full">
-          <label className='ml-1'>Correo electrónico</label>
-          <input type="text" placeholder="Correo electrónico" className="bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none"  {...register('email')} />
-        </div>
-        <button type='submit' className=" px-16 rounded-2xl text-white p-2 bg-[#000] hover:bg-gray-600 transition-all">
-          Registrar
-        </button>
-      </form>
+      <FormRent></FormRent>
     </div>
   )
 }
