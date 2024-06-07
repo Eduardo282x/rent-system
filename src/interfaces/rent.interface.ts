@@ -25,3 +25,5 @@ export interface IRegisterClient {
     phone: string;
     email: string;
 }
+
+export type ITypesRegisterClient = 'fullName' |'identify' |'phone' |'email';

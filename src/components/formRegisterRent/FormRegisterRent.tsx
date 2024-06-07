@@ -4,7 +4,8 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { StepOne } from './StepOne';
+import { StepTwo } from './StepTwo';
 
 const steps = ['Datos del cliente', 'Datos de la inmobiliaria'];
 
@@ -29,15 +30,23 @@ export const FormRegisterRent = () => {
                 ))}
             </Stepper>
 
+            {activeStep == 0 &&
+                <StepOne btnAction={handleNext}>
+                </StepOne>
+            }
+            {activeStep == 1 &&
+                <StepTwo>
+                </StepTwo>
+            }
+
             <React.Fragment>
-                <p className='my-2'>Step {activeStep + 1}</p>
                 <div className="flex justify-between w-full pt-2">
 
-                    <Button disabled={activeStep === 0} onClick={handleBack}>
+                    <Button disabled={activeStep === 0} variant='contained' onClick={handleBack}>
                         Back
                     </Button>
 
-                    <Button disabled={activeStep === 1} onClick={handleNext}>
+                    <Button disabled={activeStep === 1} variant='contained' onClick={handleNext}>
                         Next
                     </Button>
                 </div>
