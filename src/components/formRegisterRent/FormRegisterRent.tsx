@@ -20,6 +20,9 @@ export const FormRegisterRent = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
+    const sendInfo = () => {
+        console.log('Enviado');
+    }
     return (
         <div className='w-full h-[50rem] p-8'>
             <Stepper activeStep={activeStep}>
@@ -35,7 +38,7 @@ export const FormRegisterRent = () => {
                 </StepOne>
             }
             {activeStep == 1 &&
-                <StepTwo>
+                <StepTwo  btnAction={sendInfo}>
                 </StepTwo>
             }
 

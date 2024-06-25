@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { IForm } from "../../interfaces/form.interface";
+import { IForm, IFormOptions } from "../../interfaces/form.interface";
 import { IRegisterClient, defaultValues, registerClientValidationSchame, registerClient, ITypesRegisterClient } from "./stepOne.data";
 import { FC } from "react";
 
@@ -35,10 +35,29 @@ export const StepOne: FC<IStepOne> = ({btnAction}) => {
             <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 rounded-xl gap-5 items-center text-xl justify-around py-8 w-full text-black h-[40rem]">
 
                 {registerClient && registerClient.map((form: IForm, index: number) => (
-                    <div key={index} className="px-8 flex flex-col justify-center items-start gap-2 w-full">
-                        <label className='ml-1'>{form.label}</label>
-                        <input type={form.type} placeholder={form.label} className="bg-gray-200 rounded-md w-full px-4 h-12 px-2 outline-none"  {...register(form.name as ITypesRegisterClient)} />
-                    </div>
+                    (form.type == 'text' && (
+                        <div key={index} className="px-8 flex flex-col justify-center items-start gap-2 w-full">
+                            <label className='ml-1'>{form.label}</label>
+                            <input type={form.type} placeholder={form.label} className="bg-gray-200 rounded-md w-full px-4 h-12 px-2 outline-none"  {...register(form.name as ITypesRegisterClient)} />
+                        </div>
+                    )) || 
+                    (form.type == 'prefix' && (
+                        <div key={index} className="flex items-center justify-between">
+                            <div key={index} className="px-8 flex flex-col justify-center items-start gap-2 w-[30%]">
+                                <label className='ml-1'>{form.label2}</label>
+                                <select {...register(form.name2 as ITypesRegisterClient)} className={`bg-[#e5e7eb] rounded-md w-full h-12 px-2 text-black outline-none`}  >
+                                    {form.options?.map((opt: IFormOptions) => (
+                                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="px-8 flex flex-col justify-center items-start gap-2 w-[70%]">
+                                <label className='ml-1'>{form.label}</label>
+                                <input type={form.type} placeholder={form.label} className="bg-gray-200 rounded-md w-full px-4 h-12 px-2 outline-none"  {...register(form.name as ITypesRegisterClient)} />
+                            </div>
+                        </div>
+                    ))
                 ))}
 
                 <button type='submit' className="col-span-2  px-16 rounded-2xl text-white p-2 bg-blue-500 hover:bg-blue-600 transition-all">

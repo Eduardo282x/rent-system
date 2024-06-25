@@ -1,7 +1,9 @@
 export interface IForm {
     name: string;
+    name2?: string;
     type: FormType;
     label: string;
+    label2?: string;
     options?: IFormOptions[];
 }
 
@@ -10,4 +12,4 @@ export interface IFormOptions {
     value: string | number;
 }
 
-type FormType = 'text' | 'number' | 'select' | 'checkbox';
+type FormType = 'text' | 'number' | 'select' | 'checkbox' | 'prefix';
