@@ -1,12 +1,12 @@
 import './App.css'
+import 'material-icons/iconfont/material-icons.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Login } from './pages/login/Login';
-import 'material-icons/iconfont/material-icons.css';
 import { Layout } from './pages/layout/Layout';
 import { Home } from './pages/home/Home';
 import { Users } from './pages/users/Users';
-import { Clients } from './pages/clients/Clients';
-import { Sales } from './pages/sales/Sales';
+// import { Sales } from './pages/sales/Sales';
+import { Contract } from './pages/contract/Contract';
 import { Rent } from './pages/rent/Rent';
 
 const router = createBrowserRouter([
@@ -22,16 +22,12 @@ const router = createBrowserRouter([
         element: <Home></Home>
       },
       {
-        path: '/casas',
+        path: '/contratos',
+        element: <Contract></Contract>
+      },
+      {
+        path: '/detalles/:id',
         element: <Rent></Rent>
-      },
-      {
-        path: '/ventas',
-        element: <Sales></Sales>
-      },
-      {
-        path: '/clientes',
-        element: <Clients></Clients>
       },
       {
         path: '/usuarios',
