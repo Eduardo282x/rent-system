@@ -6,6 +6,8 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
+import { IRegisterClient } from './stepOne.data';
+import { IRegisterProperty } from './stepTwo.data';
 
 const steps = ['Datos del cliente', 'Datos de la inmobiliaria'];
 
@@ -23,6 +25,16 @@ export const FormRegisterRent = () => {
     const sendInfo = () => {
         console.log('Enviado');
     }
+
+    const getFormOne = (clientForm: IRegisterClient) : void => {
+        console.log(clientForm);
+    }
+
+    const getFormTwo = (propertyForm: IRegisterProperty) : void => {
+        console.log(propertyForm);
+    }
+
+
     return (
         <div className='w-full h-[50rem] p-8'>
             <Stepper activeStep={activeStep}>
@@ -34,11 +46,11 @@ export const FormRegisterRent = () => {
             </Stepper>
 
             {activeStep == 0 &&
-                <StepOne btnAction={handleNext}>
+                <StepOne btnAction={handleNext} resultForm={getFormOne}>
                 </StepOne>
             }
             {activeStep == 1 &&
-                <StepTwo  btnAction={sendInfo}>
+                <StepTwo btnAction={sendInfo} resultForm={getFormTwo}>
                 </StepTwo>
             }
 

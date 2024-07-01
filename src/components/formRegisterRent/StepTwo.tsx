@@ -5,17 +5,19 @@ import { FC } from "react";
 
 interface IStepOne {
     btnAction: () => void;
+    resultForm: (form: IRegisterProperty) => void
 }
 
-export const StepTwo: FC<IStepOne> = ({ btnAction }) => {
+export const StepTwo: FC<IStepOne> = ({ btnAction, resultForm }) => {
 
-    const { register, handleSubmit  } = useForm<IRegisterProperty>({
+    const { register, handleSubmit } = useForm<IRegisterProperty>({
         defaultValues,
         resolver: zodResolver(registerPropertyValidationSchame)
     })
     const onSubmit = async (property: IRegisterProperty) => {
         console.log(property);
         btnAction();
+        resultForm(property);
     }
 
 
@@ -28,12 +30,26 @@ export const StepTwo: FC<IStepOne> = ({ btnAction }) => {
                     <div className="flex flex-col items-center justify-center gap-5">
                         <h1>Detalles del inmueble</h1>
                         <div className="flex items-center justify-between gap-5">
-                            <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Habitacioens" {...register('rooms')} />
-                            <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Baños" {...register('bathrooms')} />
+                            <div>
+                                <label>Habitaciones</label>
+                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Habitacioens" {...register('rooms')} />
+                            </div>
+
+                            <div>
+                                <label>Baños</label>
+                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Baños" {...register('bathrooms')} />
+                            </div>
                         </div>
                         <div className="flex items-center justify-between gap-5">
-                            <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Estacionamiento" {...register('parking')} />
-                            <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Sala" {...register('hall')} />
+                            <div>
+                                <label>Estacionamiento</label>
+                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Estacionamiento" {...register('parking')} />
+                            </div>
+
+                            <div>
+                                <label>Sala</label>
+                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Sala" {...register('hall')} />
+                            </div>
                         </div>
                     </div>
 
@@ -58,11 +74,26 @@ export const StepTwo: FC<IStepOne> = ({ btnAction }) => {
 
                 <div className="flex flex-col items-center justify-between gap-10 w-full">
                     <div className="flex flex-col items-start justify-start gap-2 w-full">
-                        <h1>Limites</h1>
-                        <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Norte" {...register('north')} />
-                        <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Sur" {...register('south')} />
-                        <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Este" {...register('east')} />
-                        <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Oeste" {...register('west')} />
+                        <h1 className="text-center w-full">Limites</h1>
+                        <div className="flex items-center justify-end w-full">
+                            <label className="w-[20%]">Norte</label>
+                            <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Norte" {...register('north')} />
+                        </div>
+
+                        <div className="flex items-center justify-end w-full">
+                            <label className="w-[20%]">Sur</label>
+                            <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Sur" {...register('south')} />
+                        </div>
+
+                        <div className="flex items-center justify-end w-full">
+                            <label className="w-[20%]">Este</label>
+                            <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Este" {...register('east')} />
+                        </div>
+
+                        <div className="flex items-center justify-end w-full">
+                            <label className="w-[20%]">Oeste</label>
+                            <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Oeste" {...register('west')} />
+                        </div>
                     </div>
 
                     <div className="flex flex-col justify-center items-start gap-2 w-full">

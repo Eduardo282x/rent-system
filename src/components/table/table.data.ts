@@ -1,10 +1,12 @@
 import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import { actionsValid } from '../../interfaces/form.interface';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ITable {
     dataTable: any[];
     columns: IColumns[];
+    openForm: (open: TableReturn) => void;
 }
 
 export interface IColumns {
@@ -19,7 +21,7 @@ export interface IColumns {
 }
 
 export interface TableReturn{
-    action: string;
+    action: actionsValid;
     data: any;
 }
 export type Actions = 'edit' | 'delete';

@@ -15,8 +15,8 @@ export const registerClientValidationSchame = z.object({
     name: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     lastname: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     prefix: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    identify: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    phone: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
+    identify: z.coerce.number().gte(10, 'Es muy grande'),
+    phone: z.coerce.number().gte(7, 'Es muy grande'),
     prefixNumber: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     email: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     civil: z.string().refine(text => text !== '', { message: 'El campo es requerido' })
@@ -49,6 +49,7 @@ export const registerClient: IForm[] = [
         name: 'identify',
         name2: 'prefix',
         label2: 'Tipo',
+        maxLength: 10,
         options: [
             {
                 label: 'V',
@@ -69,7 +70,8 @@ export const registerClient: IForm[] = [
         type: 'prefix',
         label: 'Teléfono',
         name2: 'prefixNumber',
-        label2: '""',
+        label2: 'Teléfono',
+        maxLength: 7,
         options: [
             {
                 label: '0416',

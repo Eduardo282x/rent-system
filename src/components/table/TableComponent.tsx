@@ -10,8 +10,9 @@ import { TablePagination, IconButton } from "@mui/material";
 import { FC, useEffect, useState } from 'react';
 import { Actions, IColumns, ITable, StyledTableCell, TableReturn } from './table.data';
 import './table.css';
+import { actionsValid } from '../../interfaces/form.interface';
 
-export const TableComponent: FC<ITable> = ({ dataTable, columns }) => {
+export const TableComponent: FC<ITable> = ({ dataTable, columns, openForm }) => {
     const [dataFilter, setDataFilter] = useState<any[]>(dataTable);
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(10);
@@ -19,10 +20,10 @@ export const TableComponent: FC<ITable> = ({ dataTable, columns }) => {
 
     const sendData = (data: object | null, action: string) => {
         const dataForm: TableReturn = {
-            action: action,
+            action: action as actionsValid,
             data: data
         }
-        console.log(dataForm);
+        openForm(dataForm);
     }
 
     const handleChangePage = (event: unknown, newPage: number) => {
