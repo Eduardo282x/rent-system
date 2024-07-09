@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BaseResponse, ResponseLogin } from '../interfaces/base-response.interface';
+import { BaseResponse, ResponseLogin, UserData } from '../interfaces/base-response.interface';
 import { actionsValid } from '../interfaces/form.interface';
 import axiosInstance from './axios-instance';
 
@@ -65,7 +65,7 @@ export const getParamsDataApi = (endpoint: string, params: any) => {
     })
 }
 
-export const postDataApi = async (endpoint: string, data: any): Promise<ResponseLogin | BaseResponse> => {
+export const postDataApi = async (endpoint: string, data: any): Promise<ResponseLogin | BaseResponse | UserData | any> => {
     return await axiosInstance.post(endpoint, data).then((response) => {
         return response.data;
     }).catch((err) => {

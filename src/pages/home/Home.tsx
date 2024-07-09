@@ -45,7 +45,7 @@ export const Home = () => {
                 maxWidth={'lg'}
                 fullWidth={true}
             >
-                <FormRegisterRent></FormRegisterRent>
+                <FormRegisterRent handleClose={handleClose}></FormRegisterRent>
             </Dialog>
         </div>
     )

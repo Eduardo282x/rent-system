@@ -1,22 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { IRegisterProperty, defaultValues, registerPropertyValidationSchame } from "./stepTwo.data";
+import { IRegisterProperty } from "./stepTwo.data";
 import { FC } from "react";
 
 interface IStepOne {
-    btnAction: () => void;
-    resultForm: (form: IRegisterProperty) => void
+    resultForm: (form: IRegisterProperty) => void,
+    defaultValues: any,
+    validationSchame: any,
 }
 
-export const StepTwo: FC<IStepOne> = ({ btnAction, resultForm }) => {
+export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSchame }) => {
 
     const { register, handleSubmit } = useForm<IRegisterProperty>({
         defaultValues,
-        resolver: zodResolver(registerPropertyValidationSchame)
+        resolver: zodResolver(validationSchame)
     })
     const onSubmit = async (property: IRegisterProperty) => {
-        console.log(property);
-        btnAction();
         resultForm(property);
     }
 
@@ -26,6 +26,10 @@ export const StepTwo: FC<IStepOne> = ({ btnAction, resultForm }) => {
             <h1 className="text-2xl">Datos de la inmobiliaria</h1>
 
             <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 rounded-xl gap-5 items-start text-xl justify-around w-full text-black overflow-y-auto">
+                <div className="col-start-1 col-end-3 w-full flex flex-col items-center justify-between my-4 gap-2">
+                    <label>Nombre del inmueble</label>
+                    <input className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Nombre" {...register('nameRent')} />
+                </div>
                 <div className="flex flex-col items-center justify-between gap-10">
                     <div className="flex flex-col items-center justify-center gap-5">
                         <h1>Detalles del inmueble</h1>
@@ -61,8 +65,8 @@ export const StepTwo: FC<IStepOne> = ({ btnAction, resultForm }) => {
                     <div className="flex flex-col justify-center items-start gap-2 w-full">
                         <label className='ml-1'>Tipo de Inmueble</label>
                         <select {...register('type')} className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none`}  >
-                            <option value="Casa">Casa</option>
-                            <option value="Apartamento">Apartamento</option>
+                            <option value="1">Casa</option>
+                            <option value="2">Apartamento</option>
                         </select>
                     </div>
 

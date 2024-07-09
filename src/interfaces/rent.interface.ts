@@ -1,21 +1,21 @@
 export interface Properties {
-    IdRent:         number;
-    NameRent:       string;
-    Address:        string;
-    AddressDetails: string;
-    TypeRent:       number;
-    Rooms:          number;
-    Bathrooms:      number;
-    Price:          string | number;
-    SquareMeters:   string;
-    Images:         string;
-    IdClient:       number;
+    idRent:         number;
+    nameRent:       string;
+    address:        string;
+    addressDetails: string;
+    typeRent:       number;
+    rooms:          number;
+    bathrooms:      number;
+    price:          string | number;
+    squareMeters:   string;
+    images:         string;
+    idClient:       number;
     typerent:       Typerent;
 }
 
 export interface Typerent {
-    IdType:   number;
-    NameType: string;
+    idType:   number;
+    nameType: string;
 }
 
 

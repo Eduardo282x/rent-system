@@ -6,12 +6,20 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
-import { IRegisterClient } from './stepOne.data';
-import { IRegisterProperty } from './stepTwo.data';
+import { IRegisterClient, IRegisterClientSend } from './stepOne.data';
+import { IRegisterProperty, IRegisterPropertySend } from './stepTwo.data';
+import { defaultValuesClient, registerClientValidationSchame, defaultValuesRent, registerPropertyValidationSchame } from './formRegisterRent.data';
+import { postDataApi } from '../../backend/baseAxios';
 
 const steps = ['Datos del cliente', 'Datos de la inmobiliaria'];
 
-export const FormRegisterRent = () => {
+export interface IFormRegister {
+    handleClose(): void
+}
+
+export const FormRegisterRent: React.FC<IFormRegister> = ({handleClose}) => {
+    const [valuesClient, setValuesClient] = React.useState<IRegisterClient>(defaultValuesClient);
+    const [valuesRent, setValuesRent] = React.useState<IRegisterProperty>(defaultValuesRent);
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleNext = () => {
@@ -22,16 +30,52 @@ export const FormRegisterRent = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const sendInfo = () => {
-        console.log('Enviado');
+    const getFormOne = (clientForm: IRegisterClient): void => {
+        setValuesClient(clientForm);
+        handleNext();
     }
 
-    const getFormOne = (clientForm: IRegisterClient) : void => {
-        console.log(clientForm);
+    const getFormTwo = (propertyForm: IRegisterProperty): void => {
+        setValuesRent(propertyForm);
+        sendInfo();
     }
 
-    const getFormTwo = (propertyForm: IRegisterProperty) : void => {
-        console.log(propertyForm);
+    const sendInfo = async (): Promise<void> => {
+        const parseClient: IRegisterClientSend = {
+            name: valuesClient.name,
+            lastname: valuesClient.lastname,
+            identify: `${valuesClient.prefix}${valuesClient.identify}`,
+            phone: `${valuesClient.prefixNumber}${valuesClient.phone}`,
+            email: valuesClient.email,
+            civil: valuesClient.civil,
+            rol: 3
+        };
+
+        const createUser = await postDataApi('users/return',parseClient);
+
+        const parseRent: IRegisterPropertySend = {
+            nameRent: valuesRent.nameRent,
+            address: valuesRent.address,
+            addressDetails: valuesRent.address,
+            images: 'https://assets.easybroker.com/property_images/1445843/21613488/EB-EN5843.jpg?version=1581143120',
+            idClient: createUser.idUsers,
+            squareMeters: Number(valuesRent.superface),
+            rooms: Number(valuesRent.rooms),
+            bathrooms: Number(valuesRent.bathrooms),
+            price: Number(valuesRent.price),
+            north: Number(valuesRent.north),
+            east: Number(valuesRent.east),
+            west: Number(valuesRent.west),
+            south: Number(valuesRent.south),
+            parking: Number(valuesRent.parking),
+            hall: Number(valuesRent.hall),
+            info: valuesRent.info,
+            typeRent: Number(valuesRent.type),
+        };
+
+        const createRent = await postDataApi('rent',parseRent);
+        console.log(createRent);
+        handleClose();
     }
 
 
@@ -46,11 +90,11 @@ export const FormRegisterRent = () => {
             </Stepper>
 
             {activeStep == 0 &&
-                <StepOne btnAction={handleNext} resultForm={getFormOne}>
+                <StepOne resultForm={getFormOne} defaultValues={valuesClient} validationSchame={registerClientValidationSchame}>
                 </StepOne>
             }
             {activeStep == 1 &&
-                <StepTwo btnAction={sendInfo} resultForm={getFormTwo}>
+                <StepTwo resultForm={getFormTwo} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}>
                 </StepTwo>
             }
 

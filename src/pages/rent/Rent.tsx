@@ -42,12 +42,12 @@ export const Rent = () => {
         <span className="material-icons">arrow_back</span> Volver
       </div>
       <div className="flex flex-col items-center justify-center w-[60%] h-full">
-        <article style={{ backgroundImage: `url(${rent?.Images})` }} className={`bg-cover bg-no-repeat bg-center w-full h-[35rem]`}>
+        <article style={{ backgroundImage: `url(${rent?.images})` }} className={`bg-cover bg-no-repeat bg-center w-full h-[35rem]`}>
         </article>
         <div className="flex items-center justify-between gap-2  w-full p-4 bg-gray-200">
           <span onClick={() => changeImages('back')} className="material-icons text-black h-full cursor-pointer">arrow_back_ios</span>
           {Array.from({ length: 4 }, (_, index) => (
-            <article key={index} onClick={() => selectImage(index)} style={{ backgroundImage: `url(${rent?.Images})` }} className={`bg-cover bg-no-repeat bg-center ${index != imageSelected && 'opacity-50'} w-full h-[7rem] cursor-pointer`}>
+            <article key={index} onClick={() => selectImage(index)} style={{ backgroundImage: `url(${rent?.images})` }} className={`bg-cover bg-no-repeat bg-center ${index != imageSelected && 'opacity-50'} w-full h-[7rem] cursor-pointer`}>
             </article>
           ))}
 
@@ -57,25 +57,25 @@ export const Rent = () => {
           Información del Inmueble
         </div>
         <div className="flex flex-col relative items-center justify-center w-full text-black text-2xl gap-5 my-8">
-          <h1>{rent?.NameRent}</h1>
-          <p>{rent?.AddressDetails}</p>
+          <h1>{rent?.nameRent}</h1>
+          <p>{rent?.addressDetails}</p>
 
           <div className="absolute top-0 right-0">
-            {formatMoney(rent?.Price)}$
+            {formatMoney(rent?.price)}$
             <span className="material-icons text-[#0a2647]">sell</span>
           </div>
 
           <div className="flex items-center justify-between bg-gray-300 w-full py-4 px-4">
             <p>Tipo de Inmueble</p>
-            <p>{rent?.typerent.NameType}</p>
+            <p>{rent?.typerent.nameType}</p>
           </div>
           <div className="flex items-center justify-between bg-white w-full py-4 px-4">
             <p>Habitaciones</p>
-            <p>{rent?.Rooms}</p>
+            <p>{rent?.rooms}</p>
           </div>
           <div className="flex items-center justify-between bg-gray-300 w-full py-4 px-4">
             <p>Baños</p>
-            <p>{rent?.Bathrooms}</p>
+            <p>{rent?.bathrooms}</p>
           </div>
           <div className="flex items-center justify-between bg-white w-full py-4 px-4">
             <p>Cocina</p>
@@ -83,7 +83,7 @@ export const Rent = () => {
           </div>
           <div className="flex items-center justify-between bg-gray-300 w-full py-4 px-4">
             <p>Metros cuadrados</p>
-            <p>{rent?.SquareMeters}</p>
+            <p>{rent?.squareMeters}</p>
           </div>
         </div>
       </div>

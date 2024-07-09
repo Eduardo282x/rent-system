@@ -1,26 +1,5 @@
-import { z } from "zod"
 import { IForm } from "../../interfaces/form.interface";
 
-export const defaultValues = {
-    name: '',
-    lastname: '',
-    prefix: '',
-    identify: '',
-    phone: '',
-    prefixNumber: '',
-    email: '',
-    civil: '',
-}
-export const registerClientValidationSchame = z.object({
-    name: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    lastname: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    prefix: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    identify: z.coerce.number().gte(10, 'Es muy grande'),
-    phone: z.coerce.number().gte(7, 'Es muy grande'),
-    prefixNumber: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    email: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    civil: z.string().refine(text => text !== '', { message: 'El campo es requerido' })
-})
 export interface  IRegisterClient {
     name: string;
     lastname: string;
@@ -30,6 +9,16 @@ export interface  IRegisterClient {
     prefixNumber: string;
     email: string;
     civil: string;
+}
+
+export interface  IRegisterClientSend {
+    name: string;
+    lastname: string;
+    identify: string;
+    phone: string;
+    email: string;
+    civil: string;
+    rol: number;
 }
 
 export const registerClient: IForm[] = [

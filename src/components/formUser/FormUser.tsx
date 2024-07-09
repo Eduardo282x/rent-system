@@ -44,9 +44,8 @@ export const FormUser: FC<IFormUser> = ({title,action,defaultValues,keyWordId,ex
                         <input type="text"
                             className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none border-2 border-solid ${errors[form.name]?.message ? 'border-red-500' : 'border-blue-200'} focus:border-blue-500`}
                             {...register(form.name)} 
-                            
                             />
-                        {errors[form.name]?.message && <p className='text-red-500 text-sm ml-2'>{errors[form.name]?.message}</p>}
+                        {errors[form.name]?.message && <p className='text-red-500 text-sm ml-2'>{errors[form.name]?.message?.toString()}</p>}
                     </div>
                 ) ||
                 (form.type == 'number' &&
@@ -55,7 +54,7 @@ export const FormUser: FC<IFormUser> = ({title,action,defaultValues,keyWordId,ex
                         <input type="number"
                             className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none border-2 border-solid ${errors[form.name]?.message ? 'border-red-500' : 'border-blue-200'} focus:border-blue-500`}
                             {...register(form.name, { valueAsNumber: true })} />
-                        {errors[form.name]?.message && <p className='text-red-500 text-sm ml-2'>{errors[form.name]?.message}</p>}
+                        {errors[form.name]?.message && <p className='text-red-500 text-sm ml-2'>{errors[form.name]?.message?.toString()}</p>}
                     </div>
                 ) ||
                 (form.type == 'prefix' && (
@@ -63,14 +62,14 @@ export const FormUser: FC<IFormUser> = ({title,action,defaultValues,keyWordId,ex
                         <div key={index} className="flex flex-col justify-center items-start gap-2 w-[20%]">
                             <label className='ml-1'>{form.label2}</label>
                             <select 
-                            {...register(form.name2)} 
+                            {...register(form.name2 as string)} 
                             className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none border-2 border-solid ${errors[form.name]?.message ? 'border-red-500' : 'border-blue-200'} focus:border-blue-500`}
                             >
                                 {form.options?.map((opt: IFormOptions) => (
                                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                                 ))}
                             </select>
-                            {errors[form.name2]?.message && <p className='text-red-500 text-sm ml-2'>{errors[form.name2]?.message}</p>}
+                            {errors[form.name2 as string]?.message && <p className='text-red-500 text-sm ml-2'>{errors[form.name2 as string]?.message?.toString()}</p>}
                         </div>
 
                         <div className="flex flex-col justify-center items-start gap-2 w-[75%]">
@@ -82,7 +81,7 @@ export const FormUser: FC<IFormUser> = ({title,action,defaultValues,keyWordId,ex
                             maxLength={form.maxLength}
                             {...register(form.name,  { valueAsNumber: true } )}
                             />
-                            {errors[form.name]?.message && <p className='text-red-500 text-sm ml-2'>{errors[form.name]?.message}</p>}
+                            {errors[form.name]?.message && <p className='text-red-500 text-sm ml-2'>{errors[form.name]?.message?.toString()}</p>}
                         </div>
                     </div>
                 )) ||
@@ -118,7 +117,7 @@ export const FormUser: FC<IFormUser> = ({title,action,defaultValues,keyWordId,ex
                                 <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
                             ))}
                         </Select> */}
-                        {errors[form.name]?.message && <p className='text-red-500 text-sm ml-2'>{errors[form.name]?.message}</p>}
+                        {errors[form.name]?.message && <p className='text-red-500 text-sm ml-2'>{errors[form.name]?.message?.toString()}</p>}
                     </div>
                 )
             ))}

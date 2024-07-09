@@ -6,10 +6,14 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { filterBase, IFilter, PropsFilter, valuesFilter } from './filter.data';
+import { UserData } from '../../interfaces/base-response.interface';
+import { userToken } from '../../backend/authentication';
 
 
-export const Filter: FC<PropsFilter> = ({btnFunc}) => {
+export const Filter: FC<PropsFilter> = ({ btnFunc }) => {
     const [filter, setFilter] = React.useState<IFilter>(filterBase);
+
+    const userData : UserData = userToken();
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         changeFilter('price', newValue as number[]);
@@ -59,10 +63,13 @@ export const Filter: FC<PropsFilter> = ({btnFunc}) => {
                     </div>
                 </div>
 
-                <button onClick={btnFunc} className="w-auto flex items-center justify-center rounded-md text-white font-bold p-2 gap-2 hover:bg-[#2c567c] transition-all">
-                    Agregar Propiedad
-                    <span className="material-icons">add_circle</span>
-                </button>
+
+                {userData.roles.rol == 'Administrador' &&
+                    <button onClick={btnFunc} className="w-auto flex items-center justify-center rounded-md text-white font-bold p-2 gap-2 hover:bg-[#2c567c] transition-all">
+                        Agregar Propiedad
+                        <span className="material-icons">add_circle</span>
+                    </button>
+                }
             </div>
 
             <div className="flex items-center justify-start text-white w-full">
