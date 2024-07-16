@@ -1,6 +1,7 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import { formatMoney, ICards } from "./cards.data";
+
 
 export const Cards: FC<ICards> = ({ property }) => {
   const navigate = useNavigate();
@@ -9,10 +10,15 @@ export const Cards: FC<ICards> = ({ property }) => {
     navigate(`/detalles/${idRent}`)
   }
 
+  useEffect(() => {
+    console.log(property);
+  }, [])
+
   return (
     <section onClick={() => goDetails(property.idRent)} className='w-[19rem] flex flex-col items-start justify-center bg-white text-white text-black rounded-md m-2 cursor-pointer' >
-      <article style={{ backgroundImage: `url(${property.images})` }} className={`bg-cover bg-no-repeat bg-center w-full h-[15rem] rounded-md flex items-end justify-start p-2`}>
-        <p className="font-bold ">{property.nameRent}</p>
+      <article className={`bg-cover bg-no-repeat bg-center w-full h-[15rem] rounded-md flex items-end justify-start p-2 relative`}>
+        <img src={`${property.images}`} alt="No se encontraron imagenes" className=" w-full h-full"/>
+        <p className="font-bold absolute bottom-4 right-4">{property.nameRent}</p>
       </article>
       <article className="flex flex-col items-start justify-start w-full p-2 text-black">
         <div className="flex items-center justify-around gap-5 h-16 w-full">

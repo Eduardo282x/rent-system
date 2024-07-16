@@ -31,7 +31,7 @@ export const Home = () => {
         <div className="">
             <Filter btnFunc={handleClickOpen}></Filter>
             <div className='flex flex-wrap gap-5 items-center justify-center overflow-x-hidden my-5'>
-                {properties.map((pro: Properties, index: number) => (
+                {properties && properties.map((pro: Properties, index: number) => (
                     <Cards
                         key={index}
                         property={pro}

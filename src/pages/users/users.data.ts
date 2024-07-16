@@ -5,25 +5,25 @@ import { IForm } from "../../interfaces/form.interface";
 export const columnsUsers: IColumns[] = [
     {
         header: 'Nombre',
-        column: 'Name',
+        column: 'name',
         type: 'text',
         filterOption: true,
     },
     {
         header: 'Apellido',
-        column: 'Lastname',
+        column: 'lastname',
         type: 'text',
         filterOption: true,
     },
     {
         header: 'Cédula',
-        column: 'Identify',
+        column: 'identify',
         type: 'text',
         filterOption: true,
     },
     {
         header: 'Teléfono',
-        column: 'Phone',
+        column: 'phone',
         type: 'text',
         filterOption: true,
     },
