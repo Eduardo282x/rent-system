@@ -1,4 +1,4 @@
-import { Properties } from '../../interfaces/rent.interface';
+import { IProperties } from '../../interfaces/rent.interface';
 import { Filter } from '../../components/filter/Filter';
 import { getDataApi } from '../../backend/baseAxios';
 import { Cards } from '../../components/cards/Cards';
@@ -8,7 +8,7 @@ import { FormRegisterRent } from '../../components/formRegisterRent/FormRegister
 
 export const Home = () => {
     const [open, setOpen] = useState<boolean>(false);
-    const [properties, setProperties] = useState<Properties[]>([]);
+    const [properties, setProperties] = useState<IProperties[]>([]);
 
     const getProperties = async () => {
         const response = await getDataApi('rent');
@@ -31,7 +31,7 @@ export const Home = () => {
         <div className="">
             <Filter btnFunc={handleClickOpen}></Filter>
             <div className='flex flex-wrap gap-5 items-center justify-center overflow-x-hidden my-5'>
-                {properties && properties.map((pro: Properties, index: number) => (
+                {properties && properties.map((pro: IProperties, index: number) => (
                     <Cards
                         key={index}
                         property={pro}

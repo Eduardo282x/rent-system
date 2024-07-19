@@ -1,4 +1,4 @@
-import { Properties } from "../../interfaces/rent.interface";
+import { IProperties } from "../../interfaces/rent.interface";
 
 export const formatMoney = (money?: number | string): string => {
     if(money == null) return '';
@@ -6,5 +6,5 @@ export const formatMoney = (money?: number | string): string => {
 }
 
 export interface ICards {
-    property: Properties
+    property: IProperties
 }

@@ -6,9 +6,14 @@ export interface IMenu {
 
 export const menu: IMenu[] = [
     {
-        title: 'Propiedades',
+        title: 'Inicio',
         redirect: '/home',
         icon: 'home'
+    },
+    {
+        title: 'Propiedades',
+        redirect: '/propiedades',
+        icon: 'apartment'
     },
     {
         title: 'Contratos',

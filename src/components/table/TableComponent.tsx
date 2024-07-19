@@ -12,7 +12,7 @@ import { Actions, IColumns, ITable, StyledTableCell, TableReturn } from './table
 import './table.css';
 import { actionsValid } from '../../interfaces/form.interface';
 
-export const TableComponent: FC<ITable> = ({ dataTable, columns, openForm }) => {
+export const TableComponent: FC<ITable> = ({ title, dataTable, columns, openForm }) => {
     const [dataFilter, setDataFilter] = useState<any[]>(dataTable);
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(10);
@@ -53,6 +53,10 @@ export const TableComponent: FC<ITable> = ({ dataTable, columns, openForm }) => 
         }
     };
 
+    const formatNumberWithDots = (number: number): string => {
+        return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}$`;
+    }
+
     useEffect(() => {
         setDataFilter(dataTable);
     }, [dataTable]);
@@ -62,7 +66,7 @@ export const TableComponent: FC<ITable> = ({ dataTable, columns, openForm }) => 
 
             <div className="flex items-center justify-between w-full">
                 <div className="text-white text-2xl">
-                    Tabla
+                    {title}
                 </div>
                 <div className="flex items-center justify-center h-full gap-2">
 
@@ -100,7 +104,9 @@ export const TableComponent: FC<ITable> = ({ dataTable, columns, openForm }) => 
                                                 sx={{ width: ro.width }}
                                             // sx={{ width: ro.width ? ro.width : 100 }}
                                             >
-                                                {ro.type == "text" ? row[ro.column] : ""}
+                                                {ro.type == "price" && (row[ro.column] && row[ro.column] !== "" ? formatNumberWithDots(row[ro.column]) : "-")}
+                                                {ro.type == "text" && (row[ro.column] && row[ro.column] !== "" ? row[ro.column] :  "-")}
+                                                {ro.type == "boolean" && (row[ro.column] ? <span className={`material-icons-round text-green-800`}>check</span> :  <span className={`material-icons-round text-red-800`}>close</span>)}
                                                 {ro.type == "date" ? row[ro.column] : ""}
                                                 {ro.type == "icon" && (
                                                     <IconButton
@@ -119,11 +125,12 @@ export const TableComponent: FC<ITable> = ({ dataTable, columns, openForm }) => 
                 </TableContainer>
             </div>
 
-            <div className="flex items-center justify-end w-full">
+            <div className="flex items-center justify-end w-full text-white">
                 {dataFilter.length > 5 && (
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25, 50, 100]}
                         component="div"
+                        color='primary'
                         count={dataFilter.length}
                         rowsPerPage={rowsPerPage}
                         labelRowsPerPage={"Paginas"}

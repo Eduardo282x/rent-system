@@ -13,9 +13,6 @@ export interface BaseApiReturn {
 }
 
 export const BaseApi = async (action: actionsValid, data: any, body: any, keyWord: string, urlComponent: string): Promise<BaseApiReturn> => {
-
-    console.log('al inicio: ',data);
-    
     const response: BaseApiReturn = {
         close: false,
         open: false,
@@ -40,9 +37,8 @@ export const BaseApi = async (action: actionsValid, data: any, body: any, keyWor
         response.close = true;
     }
     if (action == 'editApi') {
-        console.log(data);
-        
-        await putDataApi(urlComponent, data[keyWord],data)
+        console.log('a editar ',data);
+        await putDataApi(urlComponent, data[keyWord], data)
         response.close = true;
     }
 
@@ -75,6 +71,13 @@ export const postDataApi = async (endpoint: string, data: any): Promise<Response
 
 export const putDataApi = async (endpoint: string,id: number, data: any): Promise<BaseResponse> => {
     return await axiosInstance.put(`${endpoint}/${id}`, data).then((response) => {
+        return response.data;
+    }).catch((err) => {
+        return err.response.data;
+    })
+}
+export const putDataApiNormal = async (endpoint: string, data: any): Promise<BaseResponse> => {
+    return await axiosInstance.put(`${endpoint}`, data).then((response) => {
         return response.data;
     }).catch((err) => {
         return err.response.data;

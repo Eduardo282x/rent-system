@@ -4,6 +4,7 @@ import { actionsValid } from '../../interfaces/form.interface';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ITable {
+    title: string;
     dataTable: any[];
     columns: IColumns[];
     openForm: (open: TableReturn) => void;
