@@ -92,12 +92,6 @@ export const columnsProperties: IColumns[] = [
         type: 'price',
         filterOption: true,
     },
-    // {
-    //     header: 'ID del Cliente',
-    //     column: 'idClient',
-    //     type: 'text',
-    //     filterOption: true,
-    // },
     {
         header: 'Autorizada',
         column: 'autorizated',
@@ -112,6 +106,15 @@ export const columnsProperties: IColumns[] = [
         icon: 'admin_panel_settings',
         color: 'text-blue-500',
         action: 'edit'
+    },
+    {
+        header: 'Imprimir',
+        column: 'print',
+        type: 'icon',
+        filterOption: false,
+        icon: 'download',
+        // color: 'text-red-700',
+        action: 'print'
     }
 ];
 

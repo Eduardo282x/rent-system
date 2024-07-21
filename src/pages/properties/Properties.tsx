@@ -43,9 +43,16 @@ export const Properties = () => {
     }
 
     const openDialog = async (tableReturn: IFormReturn) => {
-        const { data } = tableReturn;
-        setPropertySelected(data)
-        handleClickOpen()
+        const { data, action } = tableReturn;
+        if(action == 'print') {
+            console.log('Imprimir');
+        }
+
+        if(action == 'edit'){
+
+            setPropertySelected(data)
+            handleClickOpen()
+        }
     }
 
     const getProperties = async () => {

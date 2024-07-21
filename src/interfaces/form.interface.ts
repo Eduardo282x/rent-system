@@ -20,4 +20,4 @@ export interface IFormReturn {
 }
 
 type FormType = 'text' | 'number' | 'select' | 'checkbox' | 'prefix';
-export type actionsValid = 'edit' | 'add' | 'delete' | 'addApi' | 'editApi' | '';
+export type actionsValid = 'edit' | 'add' | 'delete' | 'addApi' | 'editApi' | '' | 'print';
