@@ -3,7 +3,6 @@ import * as React from 'react';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
 import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
 import { IRegisterClient, IRegisterClientSend } from './stepOne.data';
@@ -35,9 +34,11 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({handleClose}) => {
         handleNext();
     }
 
-    const getFormTwo = (propertyForm: IRegisterProperty): void => {
+    const getFormTwo = (propertyForm: IRegisterProperty, completed: boolean): void => {
         setValuesRent(propertyForm);
-        sendInfo();
+        if(completed){
+            sendInfo();
+        }
     }
 
     const sendInfo = async (): Promise<void> => {
@@ -94,11 +95,11 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({handleClose}) => {
                 </StepOne>
             }
             {activeStep == 1 &&
-                <StepTwo resultForm={getFormTwo} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}>
+                <StepTwo resultForm={(property, completed) => getFormTwo(property, completed)} goBack={handleBack} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}>
                 </StepTwo>
             }
 
-            <React.Fragment>
+            {/* <React.Fragment>
                 <div className="flex justify-between w-full pt-2">
 
                     <Button disabled={activeStep === 0} variant='contained' onClick={handleBack}>
@@ -109,7 +110,7 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({handleClose}) => {
                         Next
                     </Button>
                 </div>
-            </React.Fragment>
+            </React.Fragment> */}
 
         </div>
     )

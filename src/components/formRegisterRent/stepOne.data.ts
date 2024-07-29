@@ -91,8 +91,22 @@ export const registerClient: IForm[] = [
     },
     {
         name: 'civil',
-        type: 'text',
+        type: 'select',
         label: 'Estado civil',
+        options: [
+            {
+                label: 'Soltero(a)',
+                value: 'Soltero(a)'
+            },
+            {
+                label: 'Casado(a)',
+                value: 'Casado(a)'
+            },
+            {
+                label: 'Viudo(a)',
+                value: 'Viudo(a)'
+            }
+        ]
     },
 ]
 export type ITypesRegisterClient = 'name' |'lastname' |'identify' |'phone' |'email' | 'civil' | 'prefixNumber';
