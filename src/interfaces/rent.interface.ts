@@ -1,18 +1,3 @@
-export interface IProperties {
-    idRent:         number;
-    nameRent:       string;
-    address:        string;
-    addressDetails: string;
-    typeRent:       number;
-    rooms:          number;
-    bathrooms:      number;
-    price:          string | number;
-    squareMeters:   string;
-    images:         string;
-    idClient:       number;
-    typerent:       Typerent;
-}
-
 export interface IRegisterClient {
     fullName: string;
     identify: string;
@@ -22,15 +7,18 @@ export interface IRegisterClient {
 
 export type ITypesRegisterClient = 'fullName' |'identify' |'phone' |'email';
 
+export interface ISales {
+    property: IProperties
+}
 
+// nameType:       string;
 
-export interface IPorpertiesNew {
+export interface IProperties {
     idRent:         number;
     nameRent:       string;
     address:        string;
     addressDetails: string;
     typeRent:       number;
-    autorizated:    boolean;
     rooms:          number;
     bathrooms:      number;
     hall:           number;
@@ -43,12 +31,26 @@ export interface IPorpertiesNew {
     price:          string;
     squareMeters:   string;
     images:         string;
-    idClient:       number;
-    autorizationId: number;
     nameType:       string;
+    idClient:       number;
+    autorizated:    boolean;
+    autorizationId: number;
     typerent:       Typerent;
+    client:         Client;
+    autorization:   Client;
 }
 
+export interface Client {
+    idUsers:  number;
+    name:     string;
+    lastname: string;
+    identify: string;
+    email:    string;
+    phone:    string;
+    password: string;
+    civil:    string;
+    rol:      number;
+}
 
 export interface Typerent {
     idType:   number;

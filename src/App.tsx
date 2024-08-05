@@ -9,6 +9,7 @@ import { Users } from './pages/users/Users';
 import { Contract } from './pages/contract/Contract';
 import { Rent } from './pages/rent/Rent';
 import { Properties } from './pages/properties/Properties';
+import useAxiosInterceptos from './interceptos/axiosInterceptos';
 
 const router = createBrowserRouter([
   {
@@ -43,10 +44,12 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-
+  const snackbar = useAxiosInterceptos();
+  
   return (
     <div className='w-screen flex items-center justify-center'>
       <RouterProvider router={router}/>
+      {snackbar}
     </div>
   )
 }

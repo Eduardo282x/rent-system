@@ -16,7 +16,7 @@ export const columnsProperties: IColumns[] = [
     {
         header: 'Dirección larga',
         column: 'addressDetails',
-        width: '15rem',
+        width: '150px',
         type: 'text',
         filterOption: true,
     },

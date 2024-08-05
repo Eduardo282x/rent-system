@@ -1,8 +1,8 @@
-import { Button, Dialog, Snackbar } from "@mui/material"
+import { Button, Dialog } from "@mui/material"
 import { TableComponent } from "../../components/table/TableComponent"
 import { useEffect, useState } from "react";
 import { getDataApi, putDataApiNormal } from "../../backend/baseAxios";
-import { IPorpertiesNew } from "../../interfaces/rent.interface";
+import { IProperties } from "../../interfaces/rent.interface";
 import { columnsProperties } from "./properties.data";
 import { IFormReturn } from "../../interfaces/form.interface";
 import { userToken } from "../../backend/authentication";
@@ -10,10 +10,8 @@ import { UserData } from "../../interfaces/base-response.interface";
 
 export const Properties = () => {
     const [open, setOpen] = useState<boolean>(false);
-    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
-    const [properties, setProperties] = useState<IPorpertiesNew[]>([]);
-    const [propertySelected, setPropertySelected] = useState<IPorpertiesNew>();
-    const [message, setMessage] = useState<string>('');
+    const [properties, setProperties] = useState<IProperties[]>([]);
+    const [propertySelected, setPropertySelected] = useState<IProperties>();
     const userData : UserData = userToken();
     
     const handleClickOpen = () => {
@@ -24,20 +22,14 @@ export const Properties = () => {
         setOpen(false);
     };
 
-    const handleCloseSnackbar = () => {
-        setOpenSnackbar(false);
-    };
-
-
     const autorizateProperty = async (autorization: boolean) => {
         const bodyAutorization = {
             idRent: propertySelected?.idRent,
             autorizationId: userData.idUsers,
             autorization: autorization
         };
-        setOpenSnackbar(true)
         const responseAutorization = await putDataApiNormal('rent/autorization',bodyAutorization);
-        setMessage(responseAutorization.message);
+        console.log(responseAutorization.message);
         await getProperties();
         handleClose()
     }
@@ -56,7 +48,7 @@ export const Properties = () => {
     }
 
     const getProperties = async () => {
-        const response: IPorpertiesNew[] = await getDataApi('rent/all');
+        const response: IProperties[] = await getDataApi('rent/all');
         response.map(pro => {
             pro.nameType = pro.typerent.nameType;
         });
@@ -95,14 +87,6 @@ export const Properties = () => {
                     </div>
                 </div>
             </Dialog>
-            
-            <Snackbar
-                open={openSnackbar}
-                autoHideDuration={2000}
-                onClose={handleCloseSnackbar}
-                message={message}
-                anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
-            />
         </div>
 
     )

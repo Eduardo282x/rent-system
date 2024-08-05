@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getDataApi } from "../../backend/baseAxios";
-import { Properties } from "../../interfaces/rent.interface";
+import { IProperties } from "../../interfaces/rent.interface";
 import { formatMoney } from "../../components/cards/cards.data";
 import { FormRent } from "../../components/formRent/FormRent";
 
@@ -10,7 +10,7 @@ type orientationType = 'back' | 'next';
 export const Rent = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [rent, setRent] = useState<Properties>();
+  const [rent, setRent] = useState<IProperties>();
   const [imageSelected, setImageSelected] = useState<number>(0);
 
   const getOneRent = async (id: string) => {
