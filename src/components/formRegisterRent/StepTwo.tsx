@@ -16,7 +16,9 @@ export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
     const { register, handleSubmit, control, formState: { errors }, getValues  } = useForm<IRegisterProperty>({
         defaultValues,
         resolver: zodResolver(validationSchame)
-    })
+    });
+
+    const daysArray: number[] = Array.from({ length: 31 }, (_, i) => i + 1);
     
     const { isValid } = useFormState({ control });
     
@@ -91,6 +93,18 @@ export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
                         <textarea className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="" {...register('address')}></textarea>
                         {errors.address && <p className='text-red-500 text-sm ml-2'>{errors.address.message?.toString()}</p>}
                     </div>
+
+                    <div className="flex flex-col justify-center items-start gap-2 w-full">
+                        <label className='ml-1'>Urbanización</label>
+                        <input type="string" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="" {...register('urbanization')} />
+                        {errors.urbanization && <p className='text-red-500 text-sm ml-2'>{errors.urbanization.message?.toString()}</p>}
+                    </div>
+
+                    <div className="flex flex-col justify-center items-start gap-2 w-full">
+                        <label className='ml-1'>Avenida</label>
+                        <input type="string" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="" {...register('avenue')} />
+                        {errors.avenue && <p className='text-red-500 text-sm ml-2'>{errors.avenue.message?.toString()}</p>}
+                    </div>
                 </div>
 
                 <div className="flex flex-col items-center justify-between gap-10 w-full">
@@ -139,6 +153,16 @@ export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
                         <label className='ml-1'>Precio</label>
                         <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="" {...register('price')} />
                         {errors.price && <p className='text-red-500 text-sm ml-2'>{errors.price.message?.toString()}</p>}
+                    </div>
+
+                    <div className="flex flex-col justify-center items-start gap-2 w-full">
+                        <label className='ml-1'>Dias habiles</label>
+                        <select {...register('days')} className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none`}  >
+                            {daysArray && daysArray.map((days: number)=> (
+                                <option value={days}>{days}</option>
+                            ))}
+                        </select>
+                        {errors.days && <p className='text-red-500 text-sm ml-2'>{errors.days.message?.toString()}</p>}
                     </div>
                 </div>
 

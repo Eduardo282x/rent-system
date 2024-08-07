@@ -1,13 +1,42 @@
-import { FC } from "react"
-import { ISales } from "../../interfaces/rent.interface"
+import React, { forwardRef } from 'react';
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { ISales } from '../../interfaces/rent.interface';
 
-export const Sales: FC<ISales> = ({ property }) => {
-    return (
-        <div>
-            <p>
-                Yo, {property.autorization.name} {property.autorization.lastname}, venezolana, mayor de edad, soltera, titular de la cédula de identidad Nº.{property.autorization.identify}, actuando en nombre y representación de las ciudadanas {property.client.name} {property.client.lastname}, venezolana, mayor de edad, viuda, titular de la cédula de identidad N° .{property.client.identify} según se evidencia de Poder General de Administración y Disposición, otorgado en el Estado de Florida, el día 15 de septiembre de 2.021, por ante el Notario Público, AIXA DAMARIS AVILES, Commission #HH 023658, el cual fue apostillado el día 3 de octubre de 2.021, ante la Secretaria del Estado de Florida, N° 2021-138640, y posteriormente Protocolizado por ante el Registro Público del Tercer Circuito del Municipio Maracaibo del Estado Zulia, el día 16 de Noviembre de 2.021, anotado bajo el N° 12, Folio 12013, Tomo 19, del Protocolo de Transcripción del año 2.021; por medio del presente documento declaro: En nombre de mis mandantes doy en venta pura y simple, perfecta e irrevocable, libre de todo gravamen y sin condición alguna, a los ciudadanos RONNY JESUS PACHECO MARQUEZ, venezolano, mayor de edad, soltero, titular de la cédula de identidad N° V-17.735.058 y NOREXCY CAROLINA HERNANDEZ GALLARDO, venezolana, mayor de edad, soltera, titular de la cédula de identidad N° V-19.546.087, de este mismo domicilio; un inmueble de la única y exclusiva propiedad de mis mandantes, constituido por una casa quinta compuesta de porche, sala, comedor, corredor, tres (3) dormitorios, cocina, una sala sanitaria, lavandería, una sala sanitaria en el patio trasero anexo a la lavandería y un depósito, construida con paredes de bloques frisados, techos de platabanda y zinc y pisos de cerámica, totalmente cercada con bahareque y cerca de hierro en su frente, ubicada en el Sector Sabaneta, avenida 21A, Casa N° 100-304, en jurisdicción de la parroquia Cristo de Aranza del Estado Zulia. La parcela de terreno donde se encuentra construida la casa objeto de esta venta, tiene una superficie aproximada de DOSCIENTOS CINCUENTA Y
-                TRES METROS CUADRADOS CON OCHENTA Y NUEVE DECIMETROS CUADRADOS (253,89Mts2), y se encuentra comprendida dentro  de los siguientes linderos: NORTE: Linda con propiedad que eso fue Ángel Fuenmayor, casa N° 100-294; SUR: Linda con propiedad que eso fue de Lina Leal, casa N° 100-310; ESTE: Linda con la avenida 21A; y por el OESTE: Linda con propiedad que eso fue de Nila de Fuenmayor, casa N° 30-64. Dicho inmueble le pertenece a mis mandantes en virtud de haberlo adquirido según se evidencia en Documentos protocolizados por ante el Registro Público del Tercer Circuito del Municipio Autónomo Maracaibo del Estado Zulia, el día 14 de agosto de 2.013, inserto bajo el N° 2013.1601, Asiento Registral 1 del Inmueble Matriculado con el N° 481.21.5.3.2292 y correspondiente al libro de folio real del año 2.013, y ante el mismo registro, el día 26 de septiembre de 2.013, inserto bajo el N° 2013.1601, Asiento Registral 2 del Inmueble Matriculado con el N° 481.21.5.3.2292 y correspondiente al libro de folio real del año 2.013, asimismo, en su condición de herederas de la Sucesión BASABE VILLALOBOS LUIS ANTONIO, fallecido ab-intestato en esta Ciudad y Municipio Maracaibo del Estado Zulia en fecha 9 de Septiembre de 1997, conforme se evidencia a la Declaración Sucesoral N° 642-2022, expedida en fecha 26 de julio de 2022, emitida por el Servicio Nacional Integrado de Administración Aduanera y Tributaria (SENIAT), y le perteneció a su causante según consta en documentos protocolizados anteriormente mencionados. El precio de esta venta es la cantidad de SESENTA BOLÍVARES (Bs.60.000,00) que he recibido de los compradores, mediante cheque Nº S-91 20002950, de la entidad bancaria Banco de Venezuela, a la entera y total satisfacción de mis mandantes, con el otorgamiento de este documento y con fundamento en la titularidad antes invocada, en nombre de mis mandantes le transfiero a los compradores, todos los derechos de propiedad, dominio y posesión que les asisten sobre el referido bien, les hago la tradición legal y les respondo de saneamiento conforme a la ley. Y Nosotros, RONNY JESUS PACHECO MARQUEZ y NOREXCY CAROLINA HERNANDEZ GALLARDO, antes identificados, declaramos: Aceptamos la venta que se nos hace
-            </p>
-        </div>
-    )
-}
+const styles = StyleSheet.create({
+    page: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        paddingHorizontal: 10,
+        height: 100,
+        justifyContent: 'center', // Asegura que el contenido comience desde la parte superior
+        backgroundColor: '#FFFFFF',
+        color: '#000',
+    },
+    section: {
+        margin: 10,
+        padding: 10,
+        flexGrow: 1,
+    },
+    text: {
+        textAlign: 'justify', // Justificar el texto
+        fontSize: 12,
+    },
+});
+
+export const Sales = forwardRef<HTMLElement, ISales>(({ property }, ref) => (
+    <Document ref={ref}>
+        <Page size="A4" style={styles.page}>
+            <View style={styles.section}>
+                <Text style={styles.text}>
+                    Yo, {property.client.name} {property.client.lastname} de Profesión -- mayor de edad, de estado civil {property.client.civil} de nacionalidad {property.client.identify} y de este domicilio, titular de la cédula de identidad número {property.client.identify} por medio de la presente declaración, AUTORIZO a la empresa ---- representada por el ciudadano {property.autorization.name} {property.autorization.lastname} portador de la cédula de identidad número {property.autorization.identify} con carácter de exclusividad para vender un inmueble de mi propiedad ubicado en la Urbanización -- avenida -- denominado -- por la cantidad convenida de {property.price} bolívares
+
+                    Expresamente convengo en pagarle a la empresa --------- a título de comisión un porcentaje equivalente al -- -- por el monto de la venta.
+
+                    Esta autorización tiene un plazo de -- días a partir de la presente fecha.
+                    Queda entendido que durante la validez de esta autorización, no podré realizar ninguna gestión referente a obtener la venta del pre¬nombrado inmueble. En Maracaibo a los ---- del mes de ---- del año 2024.-
+                </Text>
+            </View>
+        </Page>
+    </Document>
+));

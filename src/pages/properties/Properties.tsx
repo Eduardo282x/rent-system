@@ -1,18 +1,14 @@
 import { Button, Dialog } from "@mui/material"
 import { TableComponent } from "../../components/table/TableComponent"
-import { useEffect, useState, useRef } from "react";
-import { getDataApi, putDataApiNormal } from "../../backend/baseAxios";
+import { useEffect, useState } from "react";
+import { getDataApi, getDataFileApi, putDataApiNormal } from "../../backend/baseAxios";
 import { IProperties } from "../../interfaces/rent.interface";
 import { columnsProperties } from "./properties.data";
 import { IFormReturn } from "../../interfaces/form.interface";
 import { userToken } from "../../backend/authentication";
 import { UserData } from "../../interfaces/base-response.interface";
-import { useReactToPrint } from "react-to-print";
-import { Contract } from "../contract/Contract";
 
 export const Properties = () => {
-    const documentRef = useRef<HTMLElement>(null);
-
     const [open, setOpen] = useState<boolean>(false);
     const [properties, setProperties] = useState<IProperties[]>([]);
     const [propertySelected, setPropertySelected] = useState<IProperties>();
@@ -38,9 +34,9 @@ export const Properties = () => {
         handleClose()
     }
 
-    const handlePrint = useReactToPrint({
-        content: () => documentRef.current,
-    });
+    // const handlePrint = useReactToPrint({
+    //     content: () => documentRef.current,
+    // });
 
     const openDialog = async (tableReturn: IFormReturn) => {
         const { data, action } = tableReturn;
@@ -49,9 +45,18 @@ export const Properties = () => {
         if (action == 'print') {
             console.log('Imprimir');
 
-            setTimeout(() => {
-                handlePrint();
-            }, 0);
+            const response = await getDataFileApi(`rent/pdfDownload/${data.idRent}`);
+
+            const url = window.URL.createObjectURL(response);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = 'compra-venta.pdf'; // Cambia el nombre del archivo según tus necesidades
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            // setTimeout(() => {
+            //     handlePrint();
+            // }, 0);
         }
         if (action == 'edit') {
             handleClickOpen()
@@ -98,12 +103,6 @@ export const Properties = () => {
                     </div>
                 </div>
             </Dialog>
-
-            <div className=" hidden">
-                {propertySelected && (
-                    <Contract ref={documentRef} property={propertySelected} />
-                )}
-            </div>
         </div>
 
     )

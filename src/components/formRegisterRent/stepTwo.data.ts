@@ -13,6 +13,10 @@ export interface  IRegisterProperty {
     info: string;
     parking: number;
     hall: number;
+
+    urbanization:string;
+    avenue: string;
+    days: number;
 }
 
 export interface  IRegisterPropertySend {
@@ -33,4 +37,8 @@ export interface  IRegisterPropertySend {
     price: number;
     squareMeters: number;
     idClient: number;
+
+    urbanization:string;
+    avenue: string;
+    days: number;
 }

@@ -1,6 +1,8 @@
 import { z } from "zod"
+import { IRegisterProperty } from "./stepTwo.data";
+import { IRegisterClient } from "./stepOne.data";
 
-export const defaultValuesClient = {
+export const defaultValuesClient: IRegisterClient = {
     name: '',
     lastname: '',
     prefix: '',
@@ -21,7 +23,7 @@ export const registerClientValidationSchame = z.object({
     civil: z.string().refine(text => text !== '', { message: 'El campo es requerido' })
 });
 
-export const defaultValuesRent = {
+export const defaultValuesRent: IRegisterProperty = {
     rooms: 0,
     bathrooms: 0,
     superface: 0,
@@ -36,6 +38,9 @@ export const defaultValuesRent = {
     info: '',
     parking: 0,
     hall: 0,
+    urbanization: '',
+    avenue: '',
+    days: 0
 }
 export const registerPropertyValidationSchame = z.object({
     nameRent: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
@@ -53,4 +58,8 @@ export const registerPropertyValidationSchame = z.object({
     info: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     parking: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     hall: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
+
+    urbanization: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
+    avenue: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
+    days: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
 })

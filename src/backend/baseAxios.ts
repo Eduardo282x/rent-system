@@ -53,6 +53,16 @@ export const getDataApi = (endpoint: string) => {
     })
 }
 
+export const getDataFileApi = (endpoint: string) => {
+    return axiosInstance.get(endpoint, {
+        responseType: 'blob'
+    }).then((response) => {
+        return response.data;
+    }).catch(err => {
+        return err.response.data;
+    })
+}
+
 export const getParamsDataApi = (endpoint: string, params: any) => {
     return axiosInstance.get(endpoint, {params}).then((response) => {
         return response.data;
@@ -63,6 +73,13 @@ export const getParamsDataApi = (endpoint: string, params: any) => {
 
 export const postDataApi = async (endpoint: string, data: any): Promise<ResponseLogin | BaseResponse | UserData | any> => {
     return await axiosInstance.post(endpoint, data).then((response) => {
+        return response.data;
+    }).catch((err) => {
+        return err.response.data;
+    })
+}
+export const postDataFileApi = async (endpoint: string, data: any): Promise<ResponseLogin | BaseResponse | UserData | any> => {
+    return await axiosInstance.post(endpoint, data, {responseType: 'blob'}).then((response) => {
         return response.data;
     }).catch((err) => {
         return err.response.data;

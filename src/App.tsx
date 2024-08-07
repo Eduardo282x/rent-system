@@ -6,10 +6,10 @@ import { Layout } from './pages/layout/Layout';
 import { Home } from './pages/home/Home';
 import { Users } from './pages/users/Users';
 // import { Sales } from './pages/sales/Sales';
-import { Contract } from './pages/contract/Contract';
 import { Rent } from './pages/rent/Rent';
 import { Properties } from './pages/properties/Properties';
 import useAxiosInterceptos from './interceptos/axiosInterceptos';
+import { Contract } from './pages/contract/Contract';
 
 const router = createBrowserRouter([
   {
