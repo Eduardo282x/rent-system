@@ -8,7 +8,7 @@ import { StepTwo } from './StepTwo';
 import { IRegisterClient, IRegisterClientSend } from './stepOne.data';
 import { IRegisterProperty, IRegisterPropertySend } from './stepTwo.data';
 import { defaultValuesClient, registerClientValidationSchame, defaultValuesRent, registerPropertyValidationSchame } from './formRegisterRent.data';
-import { postDataApi, postDataFileApi } from '../../backend/baseAxios';
+import { postDataApi } from '../../backend/baseAxios';
 
 const steps = ['Datos del cliente', 'Datos de la inmobiliaria'];
 
@@ -77,16 +77,16 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({handleClose}) => {
             days: Number(valuesRent.days)
         };
 
-        const createRent = await postDataFileApi('rent',parseRent);
+        const createRent = await postDataApi('rent',parseRent);
 
         
-        const url = window.URL.createObjectURL(createRent);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = 'compra-venta.pdf'; // Cambia el nombre del archivo según tus necesidades
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        // const url = window.URL.createObjectURL(createRent);
+        // const link = document.createElement("a");
+        // link.href = url;
+        // link.download = 'compra-venta.pdf'; // Cambia el nombre del archivo según tus necesidades
+        // document.body.appendChild(link);
+        // link.click();
+        // document.body.removeChild(link);
 
         console.log(createRent);
         handleClose();
