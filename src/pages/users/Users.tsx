@@ -40,9 +40,9 @@ export const Users = () => {
 
     if(data && action == 'edit'){
       data.prefix = data.identify.substring(0,1);
-      data.identify = data.identify.substring(1);
-      data.phone = data.phone.substring(4);
+      data.identify = data.identify.substring(2);
       data.prefixNumber = data.phone.substring(0,4);
+      data.phone = data.phone.substring(4);
       responseBaseApi = await BaseApi(action,data, defaultValues ,'idUsers','users');
     } else {
       responseBaseApi = await BaseApi(action,data, defaultValues ,'idUsers','users');
