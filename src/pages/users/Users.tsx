@@ -63,7 +63,7 @@ export const Users = () => {
   return (
     <div className='flex items-center justify-center text-white rounded-xl bg-[#0a2647] p-4 my-16'>
       {users.length > 0 && (
-        <TableComponent title={'Usuarios'} columns={columnsUsers} dataTable={users} openForm={openDialog}></TableComponent>
+        <TableComponent title={'Usuarios'} config={{includeBtnAdd: true, includeFilter: true}} columns={columnsUsers} dataTable={users} openForm={openDialog}></TableComponent>
       )}
 
       <Dialog

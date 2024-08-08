@@ -7,7 +7,13 @@ export interface ITable {
     title: string;
     dataTable: any[];
     columns: IColumns[];
+    config: IConfigTable;
     openForm: (open: TableReturn) => void;
+}
+
+export interface IConfigTable {
+    includeFilter: boolean;
+    includeBtnAdd: boolean;
 }
 
 export interface IColumns {

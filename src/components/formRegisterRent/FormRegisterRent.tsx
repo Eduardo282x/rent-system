@@ -1,42 +1,28 @@
 
 import * as React from 'react';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
 import { IRegisterClient, IRegisterClientSend } from './stepOne.data';
 import { IRegisterProperty, IRegisterPropertySend } from './stepTwo.data';
 import { defaultValuesClient, registerClientValidationSchame, defaultValuesRent, registerPropertyValidationSchame } from './formRegisterRent.data';
 import { postDataApi } from '../../backend/baseAxios';
-
-const steps = ['Datos del cliente', 'Datos de la inmobiliaria'];
+import { Divider } from '@mui/material';
 
 export interface IFormRegister {
     handleClose(): void
 }
 
-export const FormRegisterRent: React.FC<IFormRegister> = ({handleClose}) => {
+export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
     const [valuesClient, setValuesClient] = React.useState<IRegisterClient>(defaultValuesClient);
     const [valuesRent, setValuesRent] = React.useState<IRegisterProperty>(defaultValuesRent);
-    const [activeStep, setActiveStep] = React.useState(0);
-
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
 
     const getFormOne = (clientForm: IRegisterClient): void => {
         setValuesClient(clientForm);
-        handleNext();
     }
 
     const getFormTwo = (propertyForm: IRegisterProperty, completed: boolean): void => {
         setValuesRent(propertyForm);
-        if(completed){
+        if (completed) {
             sendInfo();
         }
     }
@@ -52,7 +38,7 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({handleClose}) => {
             rol: 3
         };
 
-        const createUser = await postDataApi('users/return',parseClient);
+        const createUser = await postDataApi('users/return', parseClient);
 
         const parseRent: IRegisterPropertySend = {
             nameRent: valuesRent.nameRent,
@@ -72,59 +58,34 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({handleClose}) => {
             hall: Number(valuesRent.hall),
             info: valuesRent.info,
             typeRent: Number(valuesRent.type),
-            urbanization:valuesRent.urbanization,
+            urbanization: valuesRent.urbanization,
             avenue: valuesRent.avenue,
             days: Number(valuesRent.days)
         };
 
-        const createRent = await postDataApi('rent',parseRent);
+        const createRent = await postDataApi('rent', parseRent);
 
-        
-        // const url = window.URL.createObjectURL(createRent);
-        // const link = document.createElement("a");
-        // link.href = url;
-        // link.download = 'compra-venta.pdf'; // Cambia el nombre del archivo según tus necesidades
-        // document.body.appendChild(link);
-        // link.click();
-        // document.body.removeChild(link);
+        const url = window.URL.createObjectURL(createRent);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = 'compra-venta.pdf'; // Cambia el nombre del archivo según tus necesidades
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
 
-        console.log(createRent);
         handleClose();
     }
 
 
     return (
         <div className='w-full h-[50rem] p-8'>
-            <Stepper activeStep={activeStep}>
-                {steps.map((label, index) => (
-                    <Step key={index}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
+            <StepOne resultForm={getFormOne} defaultValues={valuesClient} validationSchame={registerClientValidationSchame}>
+            </StepOne>
 
-            {activeStep == 0 &&
-                <StepOne resultForm={getFormOne} defaultValues={valuesClient} validationSchame={registerClientValidationSchame}>
-                </StepOne>
-            }
-            {activeStep == 1 &&
-                <StepTwo resultForm={(property, completed) => getFormTwo(property, completed)} goBack={handleBack} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}>
-                </StepTwo>
-            }
-
-            {/* <React.Fragment>
-                <div className="flex justify-between w-full pt-2">
-
-                    <Button disabled={activeStep === 0} variant='contained' onClick={handleBack}>
-                        Back
-                    </Button>
-
-                    <Button disabled={activeStep === 1} variant='contained' onClick={handleNext}>
-                        Next
-                    </Button>
-                </div>
-            </React.Fragment> */}
-
+            <Divider />
+            
+            <StepTwo resultForm={(property, completed) => getFormTwo(property, completed)} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}>
+            </StepTwo>
         </div>
     )
 }

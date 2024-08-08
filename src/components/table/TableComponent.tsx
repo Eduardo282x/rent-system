@@ -12,7 +12,7 @@ import { Actions, IColumns, ITable, StyledTableCell, TableReturn } from './table
 import './table.css';
 import { actionsValid } from '../../interfaces/form.interface';
 
-export const TableComponent: FC<ITable> = ({ title, dataTable, columns, openForm }) => {
+export const TableComponent: FC<ITable> = ({ title, dataTable, columns, config, openForm }) => {
     const [dataFilter, setDataFilter] = useState<any[]>(dataTable);
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(10);
@@ -70,16 +70,20 @@ export const TableComponent: FC<ITable> = ({ title, dataTable, columns, openForm
                 </div>
                 <div className="flex items-center justify-center h-full gap-2">
 
-                    <div className="w-[20rem] bg-white rounded-xl p-1">
-                        <div className={`flex items-center justify-between rounded-md h-12 w-full`}>
-                            <input placeholder='Buscar' onChange={onFilter} type="text" className="text-black p-2 bg-transparent outline-none w-[85%] h-full" />
-                            <span className="material-icons mr-[4%] -ml-[4%]">search</span>
+                    {config.includeFilter && (
+                        <div className="w-[20rem] bg-white rounded-xl p-1">
+                            <div className={`flex items-center justify-between rounded-md h-12 w-full`}>
+                                <input placeholder='Buscar' onChange={onFilter} type="text" className="text-black p-2 bg-transparent outline-none w-[85%] h-full" />
+                                <span className="material-icons mr-[4%] -ml-[4%]">search</span>
+                            </div>
                         </div>
-                    </div>
+                    )}
 
-                    <button onClick={() => sendData(null, 'add')} className="rounded-full bg-blue-500 hover:bg-[#1e68f1] text-white transition-all flex items-center justify-center p-2">
-                        <span className={`material-icons-round`}>add</span>
-                    </button>
+                    {config.includeBtnAdd && (
+                        <button onClick={() => sendData(null, 'add')} className="rounded-full bg-blue-500 hover:bg-[#1e68f1] text-white transition-all flex items-center justify-center p-2">
+                            <span className={`material-icons-round`}>add</span>
+                        </button>
+                    )}
                 </div>
             </div>
 
@@ -102,11 +106,11 @@ export const TableComponent: FC<ITable> = ({ title, dataTable, columns, openForm
                                             <TableCell
                                                 key={key}
                                                 sx={{ width: ro.width }}
-                                            // sx={{ width: ro.width ? ro.width : 100 }}
                                             >
                                                 {ro.type == "price" && (row[ro.column] && row[ro.column] !== "" ? formatNumberWithDots(row[ro.column]) : "-")}
-                                                {ro.type == "text" && (row[ro.column] && row[ro.column] !== "" ? row[ro.column] :  "-")}
-                                                {ro.type == "boolean" && (row[ro.column] ? <span className={`material-icons-round text-green-800`}>check</span> :  <span className={`material-icons-round text-red-800`}>close</span>)}
+                                                {ro.type == "square" && (row[ro.column] && row[ro.column] !== "" ? `${row[ro.column]}m²` : "-")}
+                                                {ro.type == "text" && (row[ro.column] && row[ro.column] !== "" ? row[ro.column] : "-")}
+                                                {ro.type == "boolean" && (row[ro.column] ? <span className={`material-icons-round text-green-800`}>check</span> : <span className={`material-icons-round text-red-800`}>close</span>)}
                                                 {ro.type == "date" ? row[ro.column] : ""}
                                                 {ro.type == "icon" && (
                                                     <IconButton

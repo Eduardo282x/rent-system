@@ -14,13 +14,6 @@ export const columnsProperties: IColumns[] = [
         filterOption: true,
     },
     {
-        header: 'Dirección larga',
-        column: 'addressDetails',
-        width: '150px',
-        type: 'text',
-        filterOption: true,
-    },
-    {
         header: 'Tipo',
         column: 'nameType',
         type: 'text',
@@ -51,39 +44,9 @@ export const columnsProperties: IColumns[] = [
         filterOption: true,
     },
     {
-        header: 'Norte',
-        column: 'north',
-        type: 'text',
-        filterOption: true,
-    },
-    {
-        header: 'Sur',
-        column: 'south',
-        type: 'text',
-        filterOption: true,
-    },
-    {
-        header: 'Este',
-        column: 'east',
-        type: 'text',
-        filterOption: true,
-    },
-    {
-        header: 'Oeste',
-        column: 'west',
-        type: 'text',
-        filterOption: true,
-    },
-    {
         header: 'Metros Cuadrados',
         column: 'squareMeters',
-        type: 'text',
-        filterOption: true,
-    },
-    {
-        header: 'Información',
-        column: 'info',
-        type: 'text',
+        type: 'square',
         filterOption: true,
     },
     {
@@ -91,21 +54,6 @@ export const columnsProperties: IColumns[] = [
         column: 'price',
         type: 'price',
         filterOption: true,
-    },
-    {
-        header: 'Autorizada',
-        column: 'autorizated',
-        type: 'boolean',
-        filterOption: false,
-    },
-    {
-        header: 'Autorizar',
-        column: 'icon',
-        type: 'icon',
-        filterOption: false,
-        icon: 'admin_panel_settings',
-        color: 'text-blue-500',
-        action: 'edit'
     },
     {
         header: 'Imprimir',
@@ -118,3 +66,7 @@ export const columnsProperties: IColumns[] = [
     }
 ];
 
+export const configTableProperties = { 
+    includeBtnAdd: false, 
+    includeFilter: true 
+}
