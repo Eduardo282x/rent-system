@@ -1,4 +1,4 @@
-import { IColumns } from "../../components/table/table.data";
+import { IColumns, IConfigTable } from "../../components/table/table.data";
 
 export const columnsProperties: IColumns[] = [
     {
@@ -56,7 +56,7 @@ export const columnsProperties: IColumns[] = [
         filterOption: true,
     },
     {
-        header: 'Imprimir',
+        header: 'Imprimir Contrato',
         column: 'print',
         type: 'icon',
         filterOption: false,
@@ -66,7 +66,8 @@ export const columnsProperties: IColumns[] = [
     }
 ];
 
-export const configTableProperties = { 
-    includeBtnAdd: false, 
-    includeFilter: true 
+export const configTableProperties: IConfigTable = { 
+    includeBtnAdd: true, 
+    includeFilter: true,
+    textBtnAdd: 'Agregar propiedad'
 }

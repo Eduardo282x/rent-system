@@ -16,7 +16,7 @@ export const menu: IMenu[] = [
         icon: 'apartment'
     },
     {
-        title: 'Contratos',
+        title: 'Historial',
         redirect: '/contratos',
         icon: 'description'
     },

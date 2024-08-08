@@ -20,25 +20,21 @@ export interface  IRegisterProperty {
 }
 
 export interface  IRegisterPropertySend {
-    nameRent: string;
-    address: string;
-    addressDetails: string;
-    info: string;
-    images: string;
+    nameRent: string
+    address: string
+    urbanization: string
+    avenue: string
+    addressDetails: string
+    days: number;
     typeRent: number;
     rooms: number;
     bathrooms: number;
     hall: number;
     parking: number;
-    north: number;
-    east: number;
-    west: number;
-    south: number;
+    info: string
     price: number;
     squareMeters: number;
+    images: string;
+    idUser: number;
     idClient: number;
-
-    urbanization:string;
-    avenue: string;
-    days: number;
 }

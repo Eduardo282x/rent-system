@@ -11,9 +11,10 @@ export const filterBase: IFilter = {
     search: '',
     type: '',
     location: '',
-    price: [0, 1000]
+    price: [2000, 500000]
 }
 
 export interface PropsFilter {
     btnFunc: () => void;
+    filterReturn: (filter: IFilter) => void
 }

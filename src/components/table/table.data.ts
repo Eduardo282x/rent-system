@@ -14,6 +14,7 @@ export interface ITable {
 export interface IConfigTable {
     includeFilter: boolean;
     includeBtnAdd: boolean;
+    textBtnAdd: string;
 }
 
 export interface IColumns {

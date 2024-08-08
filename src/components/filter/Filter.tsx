@@ -8,12 +8,12 @@ import Slider from '@mui/material/Slider';
 import { filterBase, IFilter, PropsFilter, valuesFilter } from './filter.data';
 import { UserData } from '../../interfaces/base-response.interface';
 import { userToken } from '../../backend/authentication';
+import { formatMoney } from '../cards/cards.data';
 
 
-export const Filter: FC<PropsFilter> = ({ btnFunc }) => {
-    const [filter, setFilter] = React.useState<IFilter>(filterBase);
-
+export const Filter: FC<PropsFilter> = ({ btnFunc, filterReturn }) => {
     const userData : UserData = userToken();
+    const [filter, setFilter] = React.useState<IFilter>(filterBase);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         changeFilter('price', newValue as number[]);
@@ -39,6 +39,7 @@ export const Filter: FC<PropsFilter> = ({ btnFunc }) => {
             copyFilter[name] = value as number[];
         }
         setFilter(copyFilter);
+        filterReturn(copyFilter)
     }
 
 
@@ -104,17 +105,18 @@ export const Filter: FC<PropsFilter> = ({ btnFunc }) => {
                 <Box sx={{ width: 250 }}>
                     <p>Rango de precio</p>
                     <div className="flex items-center justify-center gap-5">
-                        <p className='w-[5rem]'>{filter.price[0]}$</p>
+                        <p className='w-[5rem]'>{formatMoney(filter.price[0])}$</p>
                         <Slider
                             value={filter.price}
                             onChange={handleChange}
                             // color="''"
                             valueLabelDisplay="auto"
                             step={50}
-                            min={0}
-                            max={1000}
+                            min={2000}
+                            max={500000}
                         />
-                        <p >{filter.price[1]}$</p>
+                        
+                        <p >{formatMoney(filter.price[1])}$</p>
                     </div>
                 </Box>
             </div>

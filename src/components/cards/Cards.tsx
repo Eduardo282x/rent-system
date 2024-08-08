@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { useNavigate } from "react-router-dom";
 import { formatMoney, ICards } from "./cards.data";
 
@@ -9,10 +9,6 @@ export const Cards: FC<ICards> = ({ property }) => {
   const goDetails = (idRent: number) => {
     navigate(`/detalles/${idRent}`)
   }
-
-  useEffect(() => {
-    console.log(property);
-  }, [])
 
   return (
     <section onClick={() => goDetails(property.idRent)} className='w-[19rem] flex flex-col items-start justify-center bg-white text-white text-black rounded-md m-2 cursor-pointer' >

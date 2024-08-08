@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFormState } from "react-hook-form";
-import { IRegisterProperty } from "./stepTwo.data";
+import { IRegisterPropertySend } from "./stepTwo.data";
 import { FC } from "react";
 
 interface IStepOne {
-    resultForm: (form: IRegisterProperty,completed: boolean) => void,
+    resultForm: (form: IRegisterPropertySend,completed: boolean) => void,
     defaultValues: any,
     validationSchame: any,
 }
 
 export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSchame  }) => {
 
-    const { register, handleSubmit, control, formState: { errors }  } = useForm<IRegisterProperty>({
+    const { register, handleSubmit, control, formState: { errors }  } = useForm<IRegisterPropertySend>({
         defaultValues,
         resolver: zodResolver(validationSchame)
     });
@@ -21,7 +21,7 @@ export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
     
     const { isValid } = useFormState({ control });
     
-    const onSubmit = async (property: IRegisterProperty, completed: boolean) => {
+    const onSubmit = async (property: IRegisterPropertySend, completed: boolean) => {
         resultForm(property, completed);
     }
 
@@ -68,18 +68,18 @@ export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
                     </div>
 
                     <div className="flex flex-col justify-center items-start gap-2 w-full">
-                        <label className='ml-1'>Superficie de la propiedad</label>
-                        <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="" {...register('superface')} />
-                        {errors.superface && <p className='text-red-500 text-sm ml-2'>{errors.superface.message?.toString()}</p>}
+                        <label className='ml-1'>Superficie de la propiedad (m²)</label>
+                        <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="" {...register('squareMeters')} />
+                        {errors.squareMeters && <p className='text-red-500 text-sm ml-2'>{errors.squareMeters.message?.toString()}</p>}
                     </div>
 
                     <div className="flex flex-col justify-center items-start gap-2 w-full">
                         <label className='ml-1'>Tipo de Inmueble</label>
-                        <select {...register('type')} className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none`}  >
+                        <select {...register('typeRent')} className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none`}  >
                             <option value="1">Casa</option>
                             <option value="2">Apartamento</option>
                         </select>
-                        {errors.type && <p className='text-red-500 text-sm ml-2'>{errors.type.message?.toString()}</p>}
+                        {errors.typeRent && <p className='text-red-500 text-sm ml-2'>{errors.typeRent.message?.toString()}</p>}
                     </div>
 
                     <div className="flex flex-col justify-center items-start gap-2 w-full">
@@ -88,7 +88,7 @@ export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
                         {errors.address && <p className='text-red-500 text-sm ml-2'>{errors.address.message?.toString()}</p>}
                     </div>
 
-                    {/* <div className="flex flex-col justify-center items-start gap-2 w-full">
+                    <div className="flex flex-col justify-center items-start gap-2 w-full">
                         <label className='ml-1'>Urbanización</label>
                         <input type="string" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="" {...register('urbanization')} />
                         {errors.urbanization && <p className='text-red-500 text-sm ml-2'>{errors.urbanization.message?.toString()}</p>}
@@ -98,7 +98,7 @@ export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
                         <label className='ml-1'>Avenida</label>
                         <input type="string" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="" {...register('avenue')} />
                         {errors.avenue && <p className='text-red-500 text-sm ml-2'>{errors.avenue.message?.toString()}</p>}
-                    </div> */}
+                    </div>
                 </div>
 
                 <div className="flex flex-col items-center justify-between gap-10 w-full">
@@ -115,7 +115,7 @@ export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
                     </div>
 
                     <div className="flex flex-col justify-center items-start gap-2 w-full">
-                        <label className='ml-1'>Dias habiles</label>
+                        <label className='ml-1'>Dias hábiles</label>
                         <select {...register('days')} className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none`}  >
                             {daysArray && daysArray.map((days: number)=> (
                                 <option value={days}>{days}</option>

@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { IRegisterProperty } from "./stepTwo.data";
+import { IRegisterPropertySend } from "./stepTwo.data";
 import { IRegisterClient } from "./stepOne.data";
 
 export const defaultValuesClient: IRegisterClient = {
@@ -23,38 +23,34 @@ export const registerClientValidationSchame = z.object({
     civil: z.string().refine(text => text !== '', { message: 'El campo es requerido' })
 });
 
-export const defaultValuesRent: IRegisterProperty = {
+export const defaultValuesRent: IRegisterPropertySend = {
+    nameRent: '',
     rooms: 0,
     bathrooms: 0,
-    superface: 0,
-    type: '',
+    squareMeters: 0,
+    typeRent: 0,
     address: '',
-    nameRent: '',
     price: 0,
-    north: 0,
-    east: 0,
-    west: 0,
-    south: 0,
     info: '',
     parking: 0,
     hall: 0,
     urbanization: '',
     avenue: '',
-    days: 0
+    days: 0,
+    idUser: 0,
+    idClient: 0,
+    addressDetails: '',
+    images: ''
 }
 export const registerPropertyValidationSchame = z.object({
     nameRent: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     rooms: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     bathrooms: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    superface: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    type: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
+    squareMeters: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
+    typeRent: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     address: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     price: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    north: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    east: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    // east: z.number({ message: 'El campo es requerido' }),
-    west: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    south: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
+
     info: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     parking: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     hall: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),

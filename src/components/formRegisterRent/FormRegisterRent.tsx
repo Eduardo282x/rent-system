@@ -3,10 +3,12 @@ import * as React from 'react';
 import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
 import { IRegisterClient, IRegisterClientSend } from './stepOne.data';
-import { IRegisterProperty, IRegisterPropertySend } from './stepTwo.data';
-import { defaultValuesClient, registerClientValidationSchame, defaultValuesRent, registerPropertyValidationSchame } from './formRegisterRent.data';
-import { postDataApi } from '../../backend/baseAxios';
+import { IRegisterPropertySend } from './stepTwo.data';
+import { defaultValuesClient, defaultValuesRent, registerPropertyValidationSchame } from './formRegisterRent.data';
+import { postDataApi, postDataFileApi } from '../../backend/baseAxios';
 import { Divider } from '@mui/material';
+import { userToken } from '../../backend/authentication';
+import { UserData } from '../../interfaces/base-response.interface';
 
 export interface IFormRegister {
     handleClose(): void
@@ -14,13 +16,14 @@ export interface IFormRegister {
 
 export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
     const [valuesClient, setValuesClient] = React.useState<IRegisterClient>(defaultValuesClient);
-    const [valuesRent, setValuesRent] = React.useState<IRegisterProperty>(defaultValuesRent);
+    const [valuesRent, setValuesRent] = React.useState<IRegisterPropertySend>(defaultValuesRent);
+    const userData: UserData = userToken();
 
     const getFormOne = (clientForm: IRegisterClient): void => {
         setValuesClient(clientForm);
     }
 
-    const getFormTwo = (propertyForm: IRegisterProperty, completed: boolean): void => {
+    const getFormTwo = (propertyForm: IRegisterPropertySend, completed: boolean): void => {
         setValuesRent(propertyForm);
         if (completed) {
             sendInfo();
@@ -46,29 +49,26 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
             addressDetails: valuesRent.address,
             images: 'https://assets.easybroker.com/property_images/1445843/21613488/EB-EN5843.jpg?version=1581143120',
             idClient: createUser.idUsers,
-            squareMeters: Number(valuesRent.superface),
+            squareMeters: Number(valuesRent.squareMeters),
             rooms: Number(valuesRent.rooms),
             bathrooms: Number(valuesRent.bathrooms),
             price: Number(valuesRent.price),
-            north: Number(valuesRent.north),
-            east: Number(valuesRent.east),
-            west: Number(valuesRent.west),
-            south: Number(valuesRent.south),
             parking: Number(valuesRent.parking),
             hall: Number(valuesRent.hall),
             info: valuesRent.info,
-            typeRent: Number(valuesRent.type),
-            urbanization: valuesRent.urbanization,
+            typeRent: Number(valuesRent.typeRent),
+            days: Number(valuesRent.days),
+            idUser: userData.idUsers,
             avenue: valuesRent.avenue,
-            days: Number(valuesRent.days)
+            urbanization: valuesRent.urbanization
         };
-
-        const createRent = await postDataApi('rent', parseRent);
+        
+        const createRent = await postDataFileApi('rent', parseRent);
 
         const url = window.URL.createObjectURL(createRent);
         const link = document.createElement("a");
         link.href = url;
-        link.download = 'compra-venta.pdf'; // Cambia el nombre del archivo según tus necesidades
+        link.download = `Contrato de fe de venta - ${valuesRent.nameRent}.pdf`; // Cambia el nombre del archivo según tus necesidades
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -79,11 +79,11 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
 
     return (
         <div className='w-full h-[50rem] p-8'>
-            <StepOne resultForm={getFormOne} defaultValues={valuesClient} validationSchame={registerClientValidationSchame}>
+            <StepOne resultForm={getFormOne} defaultValues={valuesClient}>
             </StepOne>
 
             <Divider />
-            
+
             <StepTwo resultForm={(property, completed) => getFormTwo(property, completed)} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}>
             </StepTwo>
         </div>
