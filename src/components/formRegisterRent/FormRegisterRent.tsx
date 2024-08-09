@@ -4,7 +4,7 @@ import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
 import { IRegisterClient, IRegisterClientSend } from './stepOne.data';
 import { IRegisterPropertySend } from './stepTwo.data';
-import { defaultValuesClient, defaultValuesRent, registerPropertyValidationSchame } from './formRegisterRent.data';
+import { defaultValuesClient, defaultValuesRent, registerClientValidationSchame, registerPropertyValidationSchame } from './formRegisterRent.data';
 import { postDataApi, postDataFileApi } from '../../backend/baseAxios';
 import { Divider } from '@mui/material';
 import { userToken } from '../../backend/authentication';
@@ -26,11 +26,11 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
     const getFormTwo = (propertyForm: IRegisterPropertySend, completed: boolean): void => {
         setValuesRent(propertyForm);
         if (completed) {
-            sendInfo();
+            sendInfo(propertyForm);
         }
     }
 
-    const sendInfo = async (): Promise<void> => {
+    const sendInfo = async (property: IRegisterPropertySend): Promise<void> => {
         const parseClient: IRegisterClientSend = {
             name: valuesClient.name,
             lastname: valuesClient.lastname,
@@ -44,31 +44,30 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
         const createUser = await postDataApi('users/return', parseClient);
 
         const parseRent: IRegisterPropertySend = {
-            nameRent: valuesRent.nameRent,
-            address: valuesRent.address,
-            addressDetails: valuesRent.address,
+            nameRent: property.nameRent,
+            address: property.address,
+            addressDetails: property.address,
             images: 'https://assets.easybroker.com/property_images/1445843/21613488/EB-EN5843.jpg?version=1581143120',
             idClient: createUser.idUsers,
-            squareMeters: Number(valuesRent.squareMeters),
-            rooms: Number(valuesRent.rooms),
-            bathrooms: Number(valuesRent.bathrooms),
-            price: Number(valuesRent.price),
-            parking: Number(valuesRent.parking),
-            hall: Number(valuesRent.hall),
-            info: valuesRent.info,
-            typeRent: Number(valuesRent.typeRent),
-            days: Number(valuesRent.days),
+            squareMeters: Number(property.squareMeters),
+            rooms: Number(property.rooms),
+            bathrooms: Number(property.bathrooms),
+            price: Number(property.price),
+            parking: Number(property.parking),
+            hall: Number(property.hall),
+            info: property.info,
+            typeRent: Number(property.typeRent),
+            days: Number(property.days),
             idUser: userData.idUsers,
-            avenue: valuesRent.avenue,
-            urbanization: valuesRent.urbanization
+            avenue: property.avenue,
+            urbanization: property.urbanization
         };
-        
         const createRent = await postDataFileApi('rent', parseRent);
 
         const url = window.URL.createObjectURL(createRent);
         const link = document.createElement("a");
         link.href = url;
-        link.download = `Contrato de fe de venta - ${valuesRent.nameRent}.pdf`; // Cambia el nombre del archivo según tus necesidades
+        link.download = `Contrato de fe de venta - ${property.nameRent}.pdf`; // Cambia el nombre del archivo según tus necesidades
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -79,7 +78,7 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
 
     return (
         <div className='w-full h-[50rem] p-8'>
-            <StepOne resultForm={getFormOne} defaultValues={valuesClient}>
+            <StepOne resultForm={getFormOne} defaultValues={valuesClient} validationSchame={registerClientValidationSchame}>
             </StepOne>
 
             <Divider />

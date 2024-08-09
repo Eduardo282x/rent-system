@@ -12,14 +12,14 @@ import { Actions, IColumns, ITable, StyledTableCell, TableReturn } from './table
 import './table.css';
 import { actionsValid } from '../../interfaces/form.interface';
 
-export const TableComponent: FC<ITable> = ({ title, dataTable, columns, config, openForm }) => {
+export const TableComponent: FC<ITable<any>> = ({ title, dataTable, columns, config, openForm }) => {
     const [dataFilter, setDataFilter] = useState<any[]>(dataTable);
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
 
     const sendData = (data: object | null, action: string) => {
-        const dataForm: TableReturn = {
+        const dataForm: TableReturn<any> = {
             action: action as actionsValid,
             data: data
         }
@@ -53,8 +53,8 @@ export const TableComponent: FC<ITable> = ({ title, dataTable, columns, config, 
         }
     };
 
-    const formatNumberWithDots = (number: number): string => {
-        return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}$`;
+    const formatNumberWithDots = (number: number, suffix: string): string => {
+        return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}${suffix}`;
     }
 
     useEffect(() => {
@@ -110,8 +110,8 @@ export const TableComponent: FC<ITable> = ({ title, dataTable, columns, config, 
                                                 key={key}
                                                 sx={{ width: ro.width }}
                                             >
-                                                {ro.type == "price" && (row[ro.column] && row[ro.column] !== "" ? formatNumberWithDots(row[ro.column]) : "-")}
-                                                {ro.type == "square" && (row[ro.column] && row[ro.column] !== "" ? `${row[ro.column]}m²` : "-")}
+                                                {ro.type == "price" && (row[ro.column] && row[ro.column] !== "" ? formatNumberWithDots(row[ro.column], '$') : "-")}
+                                                {ro.type == "square" && (row[ro.column] && row[ro.column] !== "" ? formatNumberWithDots(row[ro.column],'m²') : "-")}
                                                 {ro.type == "text" && (row[ro.column] && row[ro.column] !== "" ? row[ro.column] : "-")}
                                                 {ro.type == "boolean" && (row[ro.column] ? <span className={`material-icons-round text-green-800`}>check</span> : <span className={`material-icons-round text-red-800`}>close</span>)}
                                                 {ro.type == "date" ? row[ro.column] : ""}

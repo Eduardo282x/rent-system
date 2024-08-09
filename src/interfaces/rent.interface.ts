@@ -1,17 +1,6 @@
-export interface IRegisterClient {
-    fullName: string;
-    identify: string;
-    phone: string;
-    email: string;
-}
-
-export type ITypesRegisterClient = 'fullName' |'identify' |'phone' |'email';
-
 export interface ISales {
     property: IProperties
 }
-
-// nameType:       string;
 
 export interface IProperties {
     idRent:         number;

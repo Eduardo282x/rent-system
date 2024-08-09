@@ -14,9 +14,9 @@ export interface IFormOptions {
     value: string | number;
 }
 
-export interface IFormReturn {
+export interface IFormReturn<T> {
     action: actionsValid;
-    data: any;
+    data: T;
 }
 
 type FormType = 'text' | 'number' | 'select' | 'checkbox' | 'prefix';

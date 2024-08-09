@@ -6,12 +6,11 @@ import { FC } from "react";
 
 interface IStepOne {
     resultForm: (form: IRegisterPropertySend,completed: boolean) => void,
-    defaultValues: any,
+    defaultValues: IRegisterPropertySend,
     validationSchame: any,
 }
 
-export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSchame  }) => {
-
+export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSchame }) => {
     const { register, handleSubmit, control, formState: { errors }  } = useForm<IRegisterPropertySend>({
         defaultValues,
         resolver: zodResolver(validationSchame)

@@ -69,5 +69,5 @@ export const columnsProperties: IColumns[] = [
 export const configTableProperties: IConfigTable = { 
     includeBtnAdd: true, 
     includeFilter: true,
-    textBtnAdd: 'Agregar propiedad'
+    textBtnAdd: 'Registrar Propiedad'
 }

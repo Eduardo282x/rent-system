@@ -1,27 +1,31 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { IRegisterClient, IStepOne } from "./stepOne.data";
 import { FC } from "react";
 import React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-export const StepOne: FC<IStepOne> = ({ resultForm, defaultValues }) => {
+export const StepOne: FC<IStepOne> = ({ resultForm, defaultValues, validationSchame }) => {
 
-    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<IRegisterClient>({
+    const { register, handleSubmit, watch, setValue, control, formState: { errors } } = useForm<IRegisterClient>({
         defaultValues,
-        // resolver: zodResolver(validationSchame)
+        resolver: zodResolver(validationSchame)
     });
 
+    const { isValid } = useFormState({ control });
+
     const onSubmit = async (client: IRegisterClient) => {
-        resultForm(client);
+        if(isValid){
+            resultForm(client);
+        }
     }
 
     React.useEffect(() => {
         const subscription = watch((value, { name, type }) => {
-            console.log(value);
-            console.log(name);
-            console.log(type);
-
-            handleSubmit(onSubmit)();
+            if(isValid){
+                handleSubmit(onSubmit)();
+            }
         });
         return () => subscription.unsubscribe();
     }, [watch, handleSubmit]);

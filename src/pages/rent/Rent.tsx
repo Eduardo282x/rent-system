@@ -3,6 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getDataApi } from "../../backend/baseAxios";
 import { IProperties } from "../../interfaces/rent.interface";
 import { formatMoney } from "../../components/cards/cards.data";
+import { Dialog } from "@mui/material";
+import { FormRent } from "../../components/formRent/FormRent";
+import { defaultValuesClient, registerClientValidationSchame } from "../../components/formRegisterRent/formRegisterRent.data";
+import { IRegisterClient } from "../../components/formRegisterRent/stepOne.data";
 
 type orientationType = 'back' | 'next';
 
@@ -11,6 +15,7 @@ export const Rent = () => {
   const { id } = useParams();
   const [rent, setRent] = useState<IProperties>();
   const [imageSelected, setImageSelected] = useState<number>(0);
+  const [open, setOpen] = useState<boolean>(false);
 
   const getOneRent = async (id: string) => {
     setRent(await getDataApi(`rent/${id}`));
@@ -29,6 +34,18 @@ export const Rent = () => {
     // }
   }
 
+  const handleClose = () => {
+    setOpen(false);
+  }
+
+  const getFormOne = (clientForm: IRegisterClient): void => {
+    console.log(clientForm);
+    console.log(id);
+    
+
+    handleClose();
+  }
+
   useEffect(() => {
     if (id) {
       getOneRent(id)
@@ -39,7 +56,7 @@ export const Rent = () => {
     <div className="flex flex-col w-full gap-4">
       <div className='flex items-start justify-center relative gap-5 w-full h-auto pt-16 px-8 bg-white'>
         <div onClick={() => navigate(-1)} className="absolute top-4 left-8 text-black  flex gap-2 items-center justify-center cursor-pointer">
-          <span className="material-icons">arrow_back</span> 
+          <span className="material-icons">arrow_back</span>
           <span>Volver</span>
         </div>
 
@@ -97,7 +114,7 @@ export const Rent = () => {
                 </div>
                 <div className="flex items-center justify-between bg-gray-300 w-full py-2 px-4">
                   <p>Metros cuadrados</p>
-                  <p>{rent?.squareMeters}</p>
+                  <p>{formatMoney(rent?.squareMeters)} m²</p>
                 </div>
               </div>
             </div>
@@ -105,9 +122,18 @@ export const Rent = () => {
         </div>
       </div>
 
-      <button type='submit' className="w-full px-16 rounded-2xl text-white p-2 disabled:bg-gray-300 disabled:cursor-default bg-blue-900 hover:bg-blue-800 transition-all">
+      <button type='submit' onClick={() => setOpen(true)} className="w-full px-16 rounded-2xl text-white p-2 disabled:bg-gray-300 disabled:cursor-default bg-blue-900 hover:bg-blue-800 transition-all">
         Comprar
       </button>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth={'lg'}
+        fullWidth={true}
+      >
+        <FormRent resultForm={getFormOne} defaultValues={defaultValuesClient} validationSchame={registerClientValidationSchame}></FormRent>
+      </Dialog>
     </div>
   )
 }

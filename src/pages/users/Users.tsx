@@ -28,32 +28,32 @@ export const Users = () => {
     setUsers(await getDataApi('users'))
   }
 
-  const openDialog = async (tableReturn: IFormReturn) => {
+  const openDialog = async (tableReturn: IFormReturn<ICreateUser>) => {
     const { data, action } = tableReturn;
 
     let responseBaseApi: BaseApiReturn;
 
-    if(data && action== 'addApi') {
+    if (data && action == 'addApi' || action == 'editApi') {
       data.identify = `${data.prefix}${data.identify}`;
       data.phone = `${data.prefixNumber}${data.phone}`;
     }
 
-    if(data && action == 'edit'){
-      data.prefix = data.identify.substring(0,1);
+    if (data && action == 'edit') {
+      data.prefix = data.identify.substring(0, 1);
       data.identify = data.identify.substring(2);
-      data.prefixNumber = data.phone.substring(0,4);
+      data.prefixNumber = data.phone.substring(0, 4);
       data.phone = data.phone.substring(4);
-      responseBaseApi = await BaseApi(action,data, defaultValues ,'idUsers','users');
+      responseBaseApi = await BaseApi(action, data, defaultValues, 'idUsers', 'users');
     } else {
-      responseBaseApi = await BaseApi(action,data, defaultValues ,'idUsers','users');
+      responseBaseApi = await BaseApi(action, data, defaultValues, 'idUsers', 'users');
     }
 
     setBodyUsers(responseBaseApi.body as ICreateUser)
     setTitle(responseBaseApi.title);
     setAction(responseBaseApi.action);
-    if(responseBaseApi.open){handleClickOpen()}
-    if(responseBaseApi.close){handleClose()}
-    if(responseBaseApi){getUsersApi()}
+    if (responseBaseApi.open) { handleClickOpen() }
+    if (responseBaseApi.close) { handleClose() }
+    if (responseBaseApi) { getUsersApi() }
   }
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export const Users = () => {
   return (
     <div className='flex items-center justify-center text-white rounded-xl bg-[#0a2647] p-4 my-16'>
       {users.length > 0 && (
-        <TableComponent title={'Usuarios'} config={{includeBtnAdd: true, includeFilter: true,  textBtnAdd: 'Agregar Usuario'}} columns={columnsUsers} dataTable={users} openForm={openDialog}></TableComponent>
+        <TableComponent title={'Usuarios'} config={{ includeBtnAdd: true, includeFilter: true, textBtnAdd: 'Agregar Usuario' }} columns={columnsUsers} dataTable={users} openForm={openDialog}></TableComponent>
       )}
 
       <Dialog

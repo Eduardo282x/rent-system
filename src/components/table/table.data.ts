@@ -3,12 +3,12 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { actionsValid } from '../../interfaces/form.interface';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export interface ITable {
+export interface ITable<T> {
     title: string;
-    dataTable: any[];
+    dataTable: T[];
     columns: IColumns[];
     config: IConfigTable;
-    openForm: (open: TableReturn) => void;
+    openForm: (open: TableReturn<T>) => void;
 }
 
 export interface IConfigTable {
@@ -28,9 +28,9 @@ export interface IColumns {
     width?: string;
 }
 
-export interface TableReturn{
+export interface TableReturn<T>{
     action: actionsValid;
-    data: any;
+    data: T;
 }
 export type Actions = 'edit' | 'delete';
 
