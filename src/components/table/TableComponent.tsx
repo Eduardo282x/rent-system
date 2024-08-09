@@ -83,7 +83,7 @@ export const TableComponent: FC<ITable<any>> = ({ title, dataTable, columns, con
 
             <div className='flex items-center justify-start w-full'>
                 {config.includeBtnAdd && (
-                    <button onClick={() => sendData(null, 'add')} className="w-auto flex items-center justify-center rounded-md text-white font-bold p-2 gap-2 hover:bg-[#2c567c] transition-all">
+                    <button onClick={() => sendData(null, 'add')} className="w-auto flex items-center justify-center rounded-md border-2 border-solid border-white text-white font-bold p-2 gap-2 hover:bg-[#2c567c] transition-all">
                         {config.textBtnAdd}
                         <span className="material-icons">add_circle</span>
                     </button>

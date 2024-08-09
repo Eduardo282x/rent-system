@@ -65,8 +65,8 @@ export const Filter: FC<PropsFilter> = ({ btnFunc, filterReturn }) => {
                 </div>
 
 
-                {userData.roles.rol == 'Administrador' &&
-                    <button onClick={btnFunc} className="w-auto flex items-center justify-center rounded-md text-white font-bold p-2 gap-2 hover:bg-[#2c567c] transition-all">
+                {userData.roles.rol == 'Gerente' &&
+                    <button onClick={btnFunc} className="w-auto flex items-center justify-center rounded-md text-white border-2 border-solid border-white font-bold p-2 gap-2 hover:bg-[#2c567c] transition-all">
                         Registrar Propiedad
                         <span className="material-icons">add_circle</span>
                     </button>

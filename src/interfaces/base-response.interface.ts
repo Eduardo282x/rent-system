@@ -32,6 +32,6 @@ export interface Roles {
     rol:   typeRoles;
 }
 
-export type typeRoles = 'Administrador' | 'Vendedor' | 'Cliente';
+export type typeRoles = 'Gerente' | 'Promotor' | 'Cliente';
 
 
