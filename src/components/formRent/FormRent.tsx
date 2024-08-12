@@ -6,11 +6,14 @@ export const FormRent: FC<IStepOne> = ({ resultForm, defaultValues, validationSc
     const [userSeller, setUserSeller] = useState<IRegisterClient>({} as IRegisterClient)
 
     const getFormOne = (clientForm: IRegisterClient): void => {
-        setUserSeller(clientForm)
+        setUserSeller(clientForm);
+        console.log(clientForm);
     }
 
     const sendForm = () => {
         resultForm(userSeller);
+        console.log(userSeller);
+        
     }
 
     return (

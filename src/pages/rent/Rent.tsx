@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getDataApi } from "../../backend/baseAxios";
+import { getDataApi, postDataApi, postDataFileApi } from "../../backend/baseAxios";
 import { IProperties } from "../../interfaces/rent.interface";
 import { formatMoney } from "../../components/cards/cards.data";
 import { Dialog } from "@mui/material";
 import { FormRent } from "../../components/formRent/FormRent";
 import { defaultValuesClient, registerClientValidationSchame } from "../../components/formRegisterRent/formRegisterRent.data";
-import { IRegisterClient } from "../../components/formRegisterRent/stepOne.data";
+import { IRegisterClient, IRegisterClientSend } from "../../components/formRegisterRent/stepOne.data";
+import { BodySales } from "../../interfaces/sales.interface";
 
 type orientationType = 'back' | 'next';
 
@@ -18,7 +19,7 @@ export const Rent = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const getOneRent = async (id: string) => {
-    setRent(await getDataApi(`rent/${id}`));
+    setRent(await getDataApi(`rent/${id}`) as IProperties);
   }
 
   const selectImage = (index: number) => {
@@ -38,12 +39,37 @@ export const Rent = () => {
     setOpen(false);
   }
 
-  const getFormOne = (clientForm: IRegisterClient): void => {
-    console.log(clientForm);
-    console.log(id);
-    
+  const getFormOne = async (clientForm: IRegisterClient): Promise<void> => {
+    if (rent && clientForm) {
+      const parseClient: IRegisterClientSend = {
+        name: clientForm.name,
+        lastname: clientForm.lastname,
+        identify: `${clientForm.prefix}-${clientForm.identify}`,
+        phone: `${clientForm.prefixNumber}${clientForm.phone}`,
+        email: clientForm.email,
+        civil: clientForm.civil,
+        rol: 4
+      };
 
-    handleClose();
+      const createUser = await postDataApi('users/return', parseClient);
+
+
+      const registerSale: BodySales = {
+        idClient: createUser.idUsers,
+        idRent: Number(id)
+      };
+      const createRent = await postDataFileApi('sales', registerSale);
+
+      const url = window.URL.createObjectURL(createRent);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `Contrato de compra venta - ${rent?.nameRent}.pdf`; // Cambia el nombre del archivo según tus necesidades
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      handleClose();
+    }
   }
 
   useEffect(() => {

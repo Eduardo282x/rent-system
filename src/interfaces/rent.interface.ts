@@ -1,7 +1,3 @@
-export interface ISales {
-    property: IProperties
-}
-
 export interface IProperties {
     idRent:         number;
     nameRent:       string;

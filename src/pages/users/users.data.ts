@@ -66,7 +66,7 @@ export const userValidationSchame = z.object({
     civil: z.string().refine(text => text !== '', { message: 'El campo es requerido' })
 })
 
-export interface  ICreateUser {
+export interface ICreateUser {
     name: string;
     lastname: string;
     prefix: string;
@@ -151,5 +151,20 @@ export const registerUser: IForm[] = [
         type: 'text',
         label: 'Estado civil',
     },
+    {
+        name: 'rol',
+        type: 'select',
+        label: 'Rol',
+        options: [
+            {
+                label: 'Gerente',
+                value: 1
+            },
+            {
+                label: 'Promotor',
+                value: 2
+            }
+        ]
+    },
 ]
-export type ITypesRegisterClient = 'name' |'lastname' |'identify' |'phone' |'email' | 'civil' | 'prefixNumber';
+export type ITypesRegisterClient = 'name' | 'lastname' | 'identify' | 'phone' | 'email' | 'civil' | 'prefixNumber';

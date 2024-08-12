@@ -8,15 +8,22 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { TablePagination, IconButton } from "@mui/material";
 import { FC, useEffect, useState } from 'react';
-import { Actions, IColumns, ITable, StyledTableCell, TableReturn } from './table.data';
+import { Actions, formatDate, formatNumberWithDots, IColumns, ITable, StyledTableCell, TableReturn } from './table.data';
 import './table.css';
 import { actionsValid } from '../../interfaces/form.interface';
 
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { DatePicker } from '@mui/x-date-pickers';
+import { Moment } from 'moment';
+
+
 export const TableComponent: FC<ITable<any>> = ({ title, dataTable, columns, config, openForm }) => {
     const [dataFilter, setDataFilter] = useState<any[]>(dataTable);
+    const [dateStart, setDateStart] = useState<Moment | null>(null);
+    const [dateEnd, setDateEnd] = useState<Moment | null>(null);
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-
 
     const sendData = (data: object | null, action: string) => {
         const dataForm: TableReturn<any> = {
@@ -53,8 +60,10 @@ export const TableComponent: FC<ITable<any>> = ({ title, dataTable, columns, con
         }
     };
 
-    const formatNumberWithDots = (number: number, suffix: string): string => {
-        return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}${suffix}`;
+    const getDates = (e: any) => {
+        e.preventDefault();
+        console.log('Inicio: ', dateStart);
+        console.log('Fin: ', dateEnd);
     }
 
     useEffect(() => {
@@ -68,8 +77,34 @@ export const TableComponent: FC<ITable<any>> = ({ title, dataTable, columns, con
                 <div className="text-white text-2xl">
                     {title}
                 </div>
-                <div className="flex items-center justify-center h-full gap-2">
 
+                {config.includeFilterDateRange && (
+                    <form className="flex items-center justify-end gap-10 w-[50%] -mt-5" onSubmit={(event) => getDates(event)}>
+                        <div className='flex flex-col'>
+                            <label>Fecha Inicio</label>
+                            <LocalizationProvider dateAdapter={AdapterMoment}>
+                                <DatePicker
+                                    sx={{ background: '#fff', borderRadius: '.2rem', width: '10rem' }}
+                                    value={dateStart}
+                                    onChange={(date) => setDateStart(date)}
+                                />
+                            </LocalizationProvider>
+                        </div>
+
+                        <div className='flex flex-col'>
+                            <label>Fecha Fin</label>
+                            <LocalizationProvider dateAdapter={AdapterMoment}>
+                                <DatePicker
+                                    sx={{ background: '#fff', borderRadius: '.2rem', width: '10rem' }}
+                                    value={dateEnd}
+                                    onChange={(date) => setDateEnd(date)}
+                                />
+                            </LocalizationProvider>
+                        </div>
+                    </form>
+                )}
+
+                <div className="flex items-center justify-center h-full gap-2">
                     {config.includeFilter && (
                         <div className="w-[20rem] bg-white rounded-xl p-1">
                             <div className={`flex items-center justify-between rounded-md h-12 w-full`}>
@@ -111,10 +146,10 @@ export const TableComponent: FC<ITable<any>> = ({ title, dataTable, columns, con
                                                 sx={{ width: ro.width }}
                                             >
                                                 {ro.type == "price" && (row[ro.column] && row[ro.column] !== "" ? formatNumberWithDots(row[ro.column], '$') : "-")}
-                                                {ro.type == "square" && (row[ro.column] && row[ro.column] !== "" ? formatNumberWithDots(row[ro.column],'m²') : "-")}
+                                                {ro.type == "square" && (row[ro.column] && row[ro.column] !== "" ? formatNumberWithDots(row[ro.column], 'm²') : "-")}
                                                 {ro.type == "text" && (row[ro.column] && row[ro.column] !== "" ? row[ro.column] : "-")}
                                                 {ro.type == "boolean" && (row[ro.column] ? <span className={`material-icons-round text-green-800`}>check</span> : <span className={`material-icons-round text-red-800`}>close</span>)}
-                                                {ro.type == "date" ? row[ro.column] : ""}
+                                                {ro.type == "date" ? formatDate(row[ro.column]) : ""}
                                                 {ro.type == "icon" && (
                                                     <IconButton
                                                         className={`editBtn`}

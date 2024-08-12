@@ -19,30 +19,30 @@ export const columnsProperties: IColumns[] = [
         type: 'text',
         filterOption: true,
     },
-    {
-        header: 'Habitaciones',
-        column: 'rooms',
-        type: 'text',
-        filterOption: true,
-    },
-    {
-        header: 'Baños',
-        column: 'bathrooms',
-        type: 'text',
-        filterOption: true,
-    },
-    {
-        header: 'Sala',
-        column: 'hall',
-        type: 'text',
-        filterOption: true,
-    },
-    {
-        header: 'Estacionamiento',
-        column: 'parking',
-        type: 'text',
-        filterOption: true,
-    },
+    // {
+    //     header: 'Habitaciones',
+    //     column: 'rooms',
+    //     type: 'text',
+    //     filterOption: true,
+    // },
+    // {
+    //     header: 'Baños',
+    //     column: 'bathrooms',
+    //     type: 'text',
+    //     filterOption: true,
+    // },
+    // {
+    //     header: 'Sala',
+    //     column: 'hall',
+    //     type: 'text',
+    //     filterOption: true,
+    // },
+    // {
+    //     header: 'Estacionamiento',
+    //     column: 'parking',
+    //     type: 'text',
+    //     filterOption: true,
+    // },
     {
         header: 'Metros Cuadrados',
         column: 'squareMeters',
@@ -53,6 +53,12 @@ export const columnsProperties: IColumns[] = [
         header: 'Precio',
         column: 'price',
         type: 'price',
+        filterOption: true,
+    },
+    {
+        header: 'Fecha de registro',
+        column: 'date',
+        type: 'date',
         filterOption: true,
     },
     {
@@ -69,5 +75,6 @@ export const columnsProperties: IColumns[] = [
 export const configTableProperties: IConfigTable = { 
     includeBtnAdd: true, 
     includeFilter: true,
-    textBtnAdd: 'Registrar Propiedad'
+    textBtnAdd: 'Registrar Propiedad',
+    includeFilterDateRange: false
 }

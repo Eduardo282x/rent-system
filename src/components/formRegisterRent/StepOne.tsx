@@ -18,6 +18,8 @@ export const StepOne: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
     const onSubmit = async (client: IRegisterClient) => {
         if(isValid){
             resultForm(client);
+
+            
         }
     }
 

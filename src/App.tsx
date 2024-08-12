@@ -5,11 +5,10 @@ import { Login } from './pages/login/Login';
 import { Layout } from './pages/layout/Layout';
 import { Home } from './pages/home/Home';
 import { Users } from './pages/users/Users';
-// import { Sales } from './pages/sales/Sales';
 import { Rent } from './pages/rent/Rent';
 import { Properties } from './pages/properties/Properties';
 import useAxiosInterceptos from './interceptos/axiosInterceptos';
-import { Contract } from './pages/contract/Contract';
+import { History } from './pages/history/History';
 
 const router = createBrowserRouter([
   {
@@ -28,8 +27,8 @@ const router = createBrowserRouter([
         element: <Properties></Properties>
       },
       {
-        path: '/contratos',
-        element: <Contract></Contract>
+        path: '/historial',
+        element: <History></History>
       },
       {
         path: '/detalles/:id',
