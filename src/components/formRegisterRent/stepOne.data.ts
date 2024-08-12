@@ -23,5 +23,6 @@ export interface  IRegisterClientSend {
 export interface IStepOne {
     resultForm: (client: IRegisterClient) => void,
     defaultValues: IRegisterClient,
-    validationSchame: any
+    validationSchame: any,
+    btnSubmit: boolean,
 }

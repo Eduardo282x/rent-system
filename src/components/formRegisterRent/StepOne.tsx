@@ -6,7 +6,7 @@ import { FC } from "react";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export const StepOne: FC<IStepOne> = ({ resultForm, defaultValues, validationSchame }) => {
+export const StepOne: FC<IStepOne> = ({ resultForm, defaultValues, validationSchame, btnSubmit }) => {
 
     const { register, handleSubmit, watch, setValue, control, formState: { errors } } = useForm<IRegisterClient>({
         defaultValues,
@@ -16,16 +16,14 @@ export const StepOne: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
     const { isValid } = useFormState({ control });
 
     const onSubmit = async (client: IRegisterClient) => {
-        if(isValid){
+        if (isValid) {
             resultForm(client);
-
-            
         }
     }
 
     React.useEffect(() => {
         const subscription = watch((value, { name, type }) => {
-            if(isValid){
+            if (isValid) {
                 handleSubmit(onSubmit)();
             }
         });
@@ -66,10 +64,10 @@ export const StepOne: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
                     <div className="flex items-center justify-between w-[30%]">
                         <div className="px-4 flex flex-col justify-center items-start gap-2 w-[25%]">
                             <label className='ml-1'>Tipo</label>
-                            <select 
-                            {...register('prefix')} 
-                            onChange={(e) => setValue('prefix', e.target.value)}
-                            className={`bg-[#e5e7eb] rounded-md w-full h-12 px-2 text-black outline-none`}  >
+                            <select
+                                {...register('prefix')}
+                                onChange={(e) => setValue('prefix', e.target.value)}
+                                className={`bg-[#e5e7eb] rounded-md w-full h-12 px-2 text-black outline-none`}  >
                                 <option value="V">V</option>
                                 <option value="E">E</option>
                                 <option value="J">J</option>
@@ -96,10 +94,10 @@ export const StepOne: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
                     <div className="flex items-center justify-between w-[30%]">
                         <div className="px-4 flex flex-col justify-center items-start gap-2 w-[40%]">
                             <label className='ml-1'>Telefono</label>
-                            <select 
-                            {...register('prefixNumber')} 
-                            onChange={(e) => setValue('prefixNumber', e.target.value)}
-                            className={`bg-[#e5e7eb] rounded-md w-full h-12 px-2 text-black outline-none`}  >
+                            <select
+                                {...register('prefixNumber')}
+                                onChange={(e) => setValue('prefixNumber', e.target.value)}
+                                className={`bg-[#e5e7eb] rounded-md w-full h-12 px-2 text-black outline-none`}  >
                                 <option value="0416">0416</option>
                                 <option value="0426">0426</option>
                                 <option value="0414">0414</option>
@@ -132,10 +130,10 @@ export const StepOne: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
                     <div className="flex items-center justify-center w-[30%]">
                         <div className="px-4 flex flex-col justify-center items-start gap-2 w-full">
                             <label className='ml-1'>Estado civil</label>
-                            <select 
-                            {...register('civil')} 
-                            onChange={(e) => setValue('civil', e.target.value)}
-                            className={`bg-[#e5e7eb] rounded-md w-full h-12 px-2 text-black outline-none`}  >
+                            <select
+                                {...register('civil')}
+                                onChange={(e) => setValue('civil', e.target.value)}
+                                className={`bg-[#e5e7eb] rounded-md w-full h-12 px-2 text-black outline-none`}  >
                                 <option value="Soltero(a)">Soltero(a)</option>
                                 <option value="Casado(a)">Casado(a)</option>
                                 <option value="Viudo(a)">Viudo(a)</option>
@@ -145,9 +143,11 @@ export const StepOne: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
                     </div>
                 </div>
 
-                {/* <button type='submit' disabled={!isValid} className="col-span-2 disabled:bg-gray-300 disabled:cursor-default  px-16 rounded-2xl text-white p-2 bg-blue-500 hover:bg-blue-600 transition-all">
-                    Registrar cliente
-                </button> */}
+                {btnSubmit && (
+                    <button onClick={handleSubmit(onSubmit)} disabled={!isValid} className="px-16 rounded-2xl text-white p-2 disabled:bg-gray-300 disabled:cursor-default bg-blue-900 hover:bg-blue-800 transition-all">
+                        Comprar
+                    </button>
+                )}
             </form>
         </div>
     )

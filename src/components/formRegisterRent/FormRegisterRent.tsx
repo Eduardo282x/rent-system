@@ -78,7 +78,7 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
 
     return (
         <div className='w-full h-[50rem] p-8'>
-            <StepOne resultForm={getFormOne} defaultValues={valuesClient} validationSchame={registerClientValidationSchame}>
+            <StepOne resultForm={getFormOne} btnSubmit={false} defaultValues={valuesClient} validationSchame={registerClientValidationSchame}>
             </StepOne>
 
             <Divider />

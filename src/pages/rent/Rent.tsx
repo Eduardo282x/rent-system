@@ -158,7 +158,7 @@ export const Rent = () => {
         maxWidth={'lg'}
         fullWidth={true}
       >
-        <FormRent resultForm={getFormOne} defaultValues={defaultValuesClient} validationSchame={registerClientValidationSchame}></FormRent>
+        <FormRent resultForm={getFormOne} btnSubmit={true} defaultValues={defaultValuesClient} validationSchame={registerClientValidationSchame}></FormRent>
       </Dialog>
     </div>
   )
