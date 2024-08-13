@@ -9,11 +9,16 @@ import { Rent } from './pages/rent/Rent';
 import { Properties } from './pages/properties/Properties';
 import useAxiosInterceptos from './interceptos/axiosInterceptos';
 import { History } from './pages/history/History';
+import { Backup } from './pages/backup/Backup';
 
 const router = createBrowserRouter([
   {
     path:'/',
     element: <Login/>
+  },
+  {
+    path:'/recuperar',
+    element: <Backup/>
   },
   {
     element: <Layout/>,

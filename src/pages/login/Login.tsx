@@ -63,6 +63,10 @@ export const Login = () => {
                             <span className="material-icons-outlined cursor-pointer text-black mx-2" onClick={() => setShowPassword((show) => !show)}>{!showPassword ? 'visibility' : 'visibility_off'}</span>
                         </div>
                     </div>
+                    <div className="flex items-center justify-between w-full">
+                        <span>¿Has olvidado la contraseña?</span>
+                        <span onClick={() => navigate('/recuperar')} className="hover:text-[#2c567c] text-[#0a2647] font-medium cursor-pointer hover:bg-gray-200 rounded-3xl px-4 py-2 transition-all">Recuperar contraseña</span>
+                    </div>
                     <button type='submit' className="w-full rounded-md text-white p-2 bg-[#0a2647] hover:bg-[#2c567c] transition-all">
                         Ingresar
                     </button>
