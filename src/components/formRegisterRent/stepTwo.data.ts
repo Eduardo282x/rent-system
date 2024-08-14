@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export interface IStepTwo {
+    resultForm: (form: IRegisterPropertySend,completed: boolean) => void,
+    defaultValues: IRegisterPropertySend,
+    validationSchame: any,
+}
+
 export interface  IRegisterProperty {
     rooms: number;
     bathrooms: number;
@@ -37,4 +44,5 @@ export interface  IRegisterPropertySend {
     images: string;
     idUser: number;
     idClient: number;
+    idRent?: number;
 }

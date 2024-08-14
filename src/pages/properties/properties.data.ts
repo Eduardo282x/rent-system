@@ -62,6 +62,15 @@ export const columnsProperties: IColumns[] = [
         filterOption: true,
     },
     {
+        header: 'Editar',
+        column: 'edit',
+        type: 'icon',
+        filterOption: false,
+        icon: 'edit',
+        color: 'text-blue-500',
+        action: 'edit'
+    },
+    {
         header: 'Imprimir Contrato',
         column: 'print',
         type: 'icon',

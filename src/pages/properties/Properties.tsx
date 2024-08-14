@@ -1,21 +1,37 @@
 import { TableComponent } from "../../components/table/TableComponent"
 import { useEffect, useState } from "react";
-import { getDataApi, getDataFileApi } from "../../backend/baseAxios";
+import { getDataApi, getDataFileApi, putDataApiNormal } from "../../backend/baseAxios";
 import { IProperties } from "../../interfaces/rent.interface";
 import { columnsProperties, configTableProperties } from "./properties.data";
 import { IFormReturn } from "../../interfaces/form.interface";
 import { Dialog } from "@mui/material";
 import { FormRegisterRent } from "../../components/formRegisterRent/FormRegisterRent";
+// import { StepTwo } from "../../components/formRegisterRent/StepTwo";
+import { defaultValuesRent, registerPropertyValidationSchame } from "../../components/formRegisterRent/formRegisterRent.data";
+import { IRegisterPropertySend } from "../../components/formRegisterRent/stepTwo.data";
+import { IColumns } from "../../components/table/table.data";
+import { userToken } from "../../backend/authentication";
+import { RentUpdate } from "../../components/rentUpdate/RentUpdate";
 
 export const Properties = () => {
+    const [columns, setColumns] = useState<IColumns[]>(columnsProperties);
     const [properties, setProperties] = useState<IProperties[]>([]);
     const [open, setOpen] = useState<boolean>(false);
+    const [openEdit, setOpenEdit] = useState<boolean>(false);
+    const [valuesRent, setValuesRent] = useState<IRegisterPropertySend>(defaultValuesRent);
 
     const openDialog = async (tableReturn: IFormReturn<IProperties>) => {
         const { data, action } = tableReturn;
 
         if (action == 'add') {
             setOpen(true);
+        }
+
+        if (action == 'edit') {
+            setValuesRent(data as unknown as IRegisterPropertySend)
+            setTimeout(() => {
+                setOpenEdit(true);
+            }, 0);
         }
 
         if (action == 'print') {
@@ -31,9 +47,32 @@ export const Properties = () => {
         }
     }
 
-    
+    const getFormTwo = async (propertyForm: IRegisterPropertySend, completed: boolean): Promise<void> => {
+        console.log('EDITADO: ', propertyForm);
+        console.log(completed);
+        propertyForm.idRent = valuesRent.idRent;
+
+
+        propertyForm.rooms = Number(propertyForm.rooms);
+        propertyForm.bathrooms = Number(propertyForm.bathrooms);
+        propertyForm.squareMeters = Number(propertyForm.squareMeters);
+        propertyForm.typeRent = Number(propertyForm.typeRent);
+        propertyForm.parking = Number(propertyForm.parking);
+        propertyForm.hall = Number(propertyForm.hall);
+        propertyForm.days = Number(propertyForm.days);
+        propertyForm.price = Number(propertyForm.price);
+        await putDataApiNormal('rent/data', propertyForm);
+
+        setOpenEdit(false);
+
+        getProperties();
+    }
+
+
+
     const handleClose = () => {
         setOpen(false);
+        setOpenEdit(false);
         getProperties();
     };
 
@@ -47,6 +86,11 @@ export const Properties = () => {
     };
 
     useEffect(() => {
+        const user = userToken();
+        if(user.roles.rol == 'Promotor'){
+            const copyColumns = columnsProperties.filter(col => col.column !== 'edit');
+            setColumns(copyColumns);
+        }
         getProperties();
     }, [])
 
@@ -54,9 +98,17 @@ export const Properties = () => {
     return (
         <div className='flex items-center justify-center text-white rounded-xl bg-[#0a2647] p-4 my-16'>
             {properties.length > 0 && (
-                <TableComponent title={'Propiedades'} config={configTableProperties} columns={columnsProperties} dataTable={properties} openForm={openDialog}></TableComponent>
+                <TableComponent title={'Propiedades'} config={configTableProperties} columns={columns} dataTable={properties} openForm={openDialog}></TableComponent>
             )}
 
+            <Dialog
+                open={openEdit}
+                onClose={handleClose}
+                maxWidth={'lg'}
+                fullWidth={true}
+            >
+                <RentUpdate resultForm={(property, completed) => getFormTwo(property, completed)} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}></RentUpdate>
+            </Dialog>
 
             <Dialog
                 open={open}

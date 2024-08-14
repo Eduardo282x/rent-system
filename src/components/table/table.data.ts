@@ -14,8 +14,8 @@ export interface ITable<T> {
 export interface IConfigTable {
     includeFilter: boolean;
     includeBtnAdd: boolean;
-    includeFilterDateRange: boolean;
     textBtnAdd: string;
+    includeFilterDateRange: boolean;
 }
 
 export interface IColumns {

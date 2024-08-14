@@ -1,16 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFormState } from "react-hook-form";
-import { IRegisterPropertySend } from "./stepTwo.data";
+import { IRegisterPropertySend, IStepTwo } from "./stepTwo.data";
 import { FC } from "react";
 
-interface IStepOne {
-    resultForm: (form: IRegisterPropertySend,completed: boolean) => void,
-    defaultValues: IRegisterPropertySend,
-    validationSchame: any,
-}
-
-export const StepTwo: FC<IStepOne> = ({ resultForm, defaultValues, validationSchame }) => {
+export const StepTwo: FC<IStepTwo> = ({ resultForm, defaultValues, validationSchame }) => {
     const { register, handleSubmit, control, formState: { errors }  } = useForm<IRegisterPropertySend>({
         defaultValues,
         resolver: zodResolver(validationSchame)
