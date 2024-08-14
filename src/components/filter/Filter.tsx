@@ -23,9 +23,9 @@ export const Filter: FC<PropsFilter> = ({ btnFunc, filterReturn }) => {
         changeFilter('type', event.target.value);
     };
 
-    const handleChangeLocation = (event: SelectChangeEvent) => {
-        changeFilter('location', event.target.value);
-    };
+    // const handleChangeLocation = (event: SelectChangeEvent) => {
+    //     changeFilter('location', event.target.value);
+    // };
 
     const handleChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
         changeFilter('search', event.target.value);
@@ -88,7 +88,7 @@ export const Filter: FC<PropsFilter> = ({ btnFunc, filterReturn }) => {
                         <MenuItem value={'Apartamento'}>Apartamento</MenuItem>
                     </Select>
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 200 }}>
+                {/* <FormControl sx={{ m: 1, minWidth: 200 }}>
                     <InputLabel sx={{ color: '#fff' }}>Ubicación</InputLabel>
                     <Select
                         value={filter.location}
@@ -101,7 +101,7 @@ export const Filter: FC<PropsFilter> = ({ btnFunc, filterReturn }) => {
                         <MenuItem value={'Maracaibo'}>Maracaibo</MenuItem>
                         <MenuItem value={'San Francisco'}>San Francisco</MenuItem>
                     </Select>
-                </FormControl>
+                </FormControl> */}
                 <Box sx={{ width: 250 }}>
                     <p>Rango de precio</p>
                     <div className="flex items-center justify-center gap-5">
