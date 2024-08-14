@@ -46,3 +46,23 @@ export interface  IRegisterPropertySend {
     idClient: number;
     idRent?: number;
 }
+
+export type NameProperties =
+'nameRent'
+| 'address'
+| 'urbanization'
+| 'avenue'
+| 'addressDetails'
+| 'days'
+| 'typeRent'
+| 'rooms'
+| 'bathrooms'
+| 'hall'
+| 'parking'
+| 'info'
+| 'price'
+| 'squareMeters'
+| 'images'
+| 'idUser'
+| 'idClient'
+| 'idRent'

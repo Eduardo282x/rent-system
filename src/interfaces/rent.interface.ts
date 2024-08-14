@@ -13,8 +13,9 @@ export interface IProperties {
     west:           string;
     south:          string;
     info:           string;
-    price:          string;
-    squareMeters:   string;
+    price:          string | number;
+    days:           string | number;
+    squareMeters:   string | number;
     images:         string;
     nameType:       string;
     idClient:       number;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TableComponent } from "../../components/table/TableComponent"
 import { useEffect, useState } from "react";
 import { getDataApi, getDataFileApi, putDataApiNormal } from "../../backend/baseAxios";
@@ -8,10 +9,11 @@ import { Dialog } from "@mui/material";
 import { FormRegisterRent } from "../../components/formRegisterRent/FormRegisterRent";
 // import { StepTwo } from "../../components/formRegisterRent/StepTwo";
 import { defaultValuesRent, registerPropertyValidationSchame } from "../../components/formRegisterRent/formRegisterRent.data";
-import { IRegisterPropertySend } from "../../components/formRegisterRent/stepTwo.data";
+import { IRegisterPropertySend, NameProperties } from "../../components/formRegisterRent/stepTwo.data";
 import { IColumns } from "../../components/table/table.data";
 import { userToken } from "../../backend/authentication";
 import { RentUpdate } from "../../components/rentUpdate/RentUpdate";
+import { BaseResponse } from "../../interfaces/base-response.interface";
 
 export const Properties = () => {
     const [columns, setColumns] = useState<IColumns[]>(columnsProperties);
@@ -47,27 +49,28 @@ export const Properties = () => {
         }
     }
 
-    const getFormTwo = async (propertyForm: IRegisterPropertySend, completed: boolean): Promise<void> => {
-        console.log('EDITADO: ', propertyForm);
-        console.log(completed);
+    const getFormTwo = async (propertyForm: IRegisterPropertySend | any, completed: boolean): Promise<void> => {
+        const parseNumber: string[] = ['rooms','bathrooms','squareMeters','typeRent','parking','hall','days','price'];
         propertyForm.idRent = valuesRent.idRent;
+        parseNumber.map((par: string) => {
+            propertyForm[par as NameProperties] = Number(propertyForm[par as NameProperties]);
+        })
+        // propertyForm.rooms = Number(propertyForm.rooms);
+        // propertyForm.bathrooms = Number(propertyForm.bathrooms);
+        // propertyForm.squareMeters = Number(propertyForm.squareMeters);
+        // propertyForm.typeRent = Number(propertyForm.typeRent);
+        // propertyForm.parking = Number(propertyForm.parking);
+        // propertyForm.hall = Number(propertyForm.hall);
+        // propertyForm.days = Number(propertyForm.days);
+        // propertyForm.price = Number(propertyForm.price);
+        console.log(completed);
 
-
-        propertyForm.rooms = Number(propertyForm.rooms);
-        propertyForm.bathrooms = Number(propertyForm.bathrooms);
-        propertyForm.squareMeters = Number(propertyForm.squareMeters);
-        propertyForm.typeRent = Number(propertyForm.typeRent);
-        propertyForm.parking = Number(propertyForm.parking);
-        propertyForm.hall = Number(propertyForm.hall);
-        propertyForm.days = Number(propertyForm.days);
-        propertyForm.price = Number(propertyForm.price);
-        await putDataApiNormal('rent/data', propertyForm);
-
-        setOpenEdit(false);
-
-        getProperties();
+        const getReponse: BaseResponse = await putDataApiNormal('rent/data', propertyForm);
+        if(getReponse.success) {
+            setOpenEdit(false);
+            getProperties();
+        }
     }
-
 
 
     const handleClose = () => {

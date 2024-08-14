@@ -41,7 +41,8 @@ export const defaultValuesRent: IRegisterPropertySend = {
     idClient: 0,
     addressDetails: '',
     images: ''
-}
+};
+
 export const registerPropertyValidationSchame = z.object({
     nameRent: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     rooms: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),

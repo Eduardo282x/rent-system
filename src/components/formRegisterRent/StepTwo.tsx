@@ -35,26 +35,26 @@ export const StepTwo: FC<IStepTwo> = ({ resultForm, defaultValues, validationSch
                         <div className="flex items-center justify-between gap-5">
                             <div>
                                 <label>Habitaciones</label>
-                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Habitacioens" {...register('rooms')} />
+                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Habitacioens" {...register('rooms', {setValueAs: value => String(value),})} />
                                 {errors.rooms && <p className='text-red-500 text-sm ml-2'>{errors.rooms.message?.toString()}</p>}
                             </div>
 
                             <div>
                                 <label>Baños</label>
-                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Baños" {...register('bathrooms')} />
+                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Baños" {...register('bathrooms', {setValueAs: value => String(value),})} />
                                 {errors.bathrooms && <p className='text-red-500 text-sm ml-2'>{errors.bathrooms.message?.toString()}</p>}
                             </div>
                         </div>
                         <div className="flex items-center justify-between gap-5">
                             <div>
                                 <label>Estacionamiento</label>
-                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Estacionamiento" {...register('parking')} />
+                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Estacionamiento" {...register('parking', {setValueAs: value => String(value),})} />
                                 {errors.parking && <p className='text-red-500 text-sm ml-2'>{errors.parking.message?.toString()}</p>}
                             </div>
 
                             <div>
                                 <label>Sala</label>
-                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Sala" {...register('hall')} />
+                                <input type="number" className="border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="Sala" {...register('hall', {setValueAs: value => String(value),})} />
                                 {errors.hall && <p className='text-red-500 text-sm ml-2'>{errors.hall.message?.toString()}</p>}
                             </div>
                         </div>
@@ -68,7 +68,7 @@ export const StepTwo: FC<IStepTwo> = ({ resultForm, defaultValues, validationSch
 
                     <div className="flex flex-col justify-center items-start gap-2 w-full">
                         <label className='ml-1'>Tipo de Inmueble</label>
-                        <select {...register('typeRent')} className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none`}  >
+                        <select {...register('typeRent', {setValueAs: value => String(value),})} className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none`}  >
                             <option value="1">Casa</option>
                             <option value="2">Apartamento</option>
                         </select>
@@ -109,7 +109,7 @@ export const StepTwo: FC<IStepTwo> = ({ resultForm, defaultValues, validationSch
 
                     <div className="flex flex-col justify-center items-start gap-2 w-full">
                         <label className='ml-1'>Dias hábiles</label>
-                        <select {...register('days')} className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none`}  >
+                        <select {...register('days', {setValueAs: value => String(value),})} className={`bg-gray-100 rounded-md w-full h-12 px-2 text-black outline-none`}  >
                             {daysArray && daysArray.map((days: number)=> (
                                 <option value={days}>{days}</option>
                             ))}
