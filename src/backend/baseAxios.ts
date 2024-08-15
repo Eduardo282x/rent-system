@@ -78,6 +78,18 @@ export const postDataApi = async (endpoint: string, data: any): Promise<Response
         return err.response.data;
     })
 }
+export const postFilesDataApi = async (endpoint: string, file: File): Promise<ResponseLogin | BaseResponse> => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    return await axiosInstance.put(endpoint, formData, { headers: {
+        "Content-Type": "multipart/form-data",
+    },}).then((response) => {
+        return response.data;
+    }).catch((err) => {
+        return err.response.data;
+    })
+}
 export const postDataFileApi = async (endpoint: string, data: any): Promise<ResponseLogin | BaseResponse | UserData | any> => {
     return await axiosInstance.post(endpoint, data, {responseType: 'blob'}).then((response) => {
         return response.data;

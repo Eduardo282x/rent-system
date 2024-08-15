@@ -5,7 +5,7 @@ import { StepTwo } from './StepTwo';
 import { IRegisterClient, IRegisterClientSend } from './stepOne.data';
 import { IRegisterPropertySend } from './stepTwo.data';
 import { defaultValuesClient, defaultValuesRent, registerClientValidationSchame, registerPropertyValidationSchame } from './formRegisterRent.data';
-import { postDataApi, postDataFileApi } from '../../backend/baseAxios';
+import { postDataApi, postDataFileApi, postFilesDataApi } from '../../backend/baseAxios';
 import { Divider } from '@mui/material';
 import { userToken } from '../../backend/authentication';
 import { UserData } from '../../interfaces/base-response.interface';
@@ -17,6 +17,7 @@ export interface IFormRegister {
 export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
     const [valuesClient, setValuesClient] = React.useState<IRegisterClient>(defaultValuesClient);
     const [valuesRent, setValuesRent] = React.useState<IRegisterPropertySend>(defaultValuesRent);
+    const [file, setFileImage] = React.useState<File | null>(null);
     const userData: UserData = userToken();
 
     const getFormOne = (clientForm: IRegisterClient): void => {
@@ -62,7 +63,9 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
             avenue: property.avenue,
             urbanization: property.urbanization
         };
+        
         const createRent = await postDataFileApi('rent', parseRent);
+        await postFilesDataApi(`rent/image?nameRent=${property.nameRent}&idClient=${createUser.idUsers}&idUser=${userData.idUsers}`, file as File);
 
         const url = window.URL.createObjectURL(createRent);
         const link = document.createElement("a");
@@ -83,7 +86,7 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
 
             <Divider />
 
-            <StepTwo resultForm={(property, completed) => getFormTwo(property, completed)} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}>
+            <StepTwo resultForm={(property, completed) => getFormTwo(property, completed)} setImageFile={setFileImage} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}>
             </StepTwo>
         </div>
     )

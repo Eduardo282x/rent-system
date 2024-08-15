@@ -3,6 +3,7 @@ export interface IStepTwo {
     resultForm: (form: IRegisterPropertySend,completed: boolean) => void,
     defaultValues: IRegisterPropertySend,
     validationSchame: any,
+    setImageFile: any,
 }
 
 export interface  IRegisterProperty {

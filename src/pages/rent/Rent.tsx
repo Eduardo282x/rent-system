@@ -88,13 +88,13 @@ export const Rent = () => {
 
         <div className="flex items-start justify-between gap-5 w-full h-full">
           <div className="w-[20rem]">
-            <article style={{ backgroundImage: `url(${rent?.images})` }} className={`bg-cover bg-no-repeat bg-center w-full h-[18rem]`}>
+            <article style={{ backgroundImage: `url('../../../public/${rent?.images}')` }} className={`bg-cover bg-no-repeat bg-center w-full h-[18rem]`}>
             </article>
 
             <div className="flex items-center justify-between gap-2  w-full p-4 bg-gray-200">
               <span onClick={() => changeImages('back')} className="material-icons text-black h-full cursor-pointer">arrow_back_ios</span>
               {Array.from({ length: 4 }, (_, index) => (
-                <article key={index} onClick={() => selectImage(index)} style={{ backgroundImage: `url(${rent?.images})` }} className={`bg-cover bg-no-repeat bg-center ${index != imageSelected && 'opacity-50'} w-full h-[3rem] cursor-pointer`}>
+                <article key={index} onClick={() => selectImage(index)} style={{ backgroundImage: `url('../../../public/${rent?.images}')` }} className={`bg-cover bg-no-repeat bg-center ${index != imageSelected && 'opacity-50'} w-full h-[3rem] cursor-pointer`}>
                 </article>
               ))}
 

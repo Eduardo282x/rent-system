@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TableComponent } from "../../components/table/TableComponent"
 import { useEffect, useState } from "react";
-import { getDataApi, getDataFileApi, putDataApiNormal } from "../../backend/baseAxios";
+import { getDataApi, getDataFileApi, postFilesDataApi, putDataApiNormal } from "../../backend/baseAxios";
 import { IProperties } from "../../interfaces/rent.interface";
 import { columnsProperties, configTableProperties } from "./properties.data";
 import { IFormReturn } from "../../interfaces/form.interface";
@@ -15,15 +15,31 @@ import { userToken } from "../../backend/authentication";
 import { RentUpdate } from "../../components/rentUpdate/RentUpdate";
 import { BaseResponse } from "../../interfaces/base-response.interface";
 
+export interface ClientUser {
+    idClient: number;
+    idUser: number;
+}
+
 export const Properties = () => {
     const [columns, setColumns] = useState<IColumns[]>(columnsProperties);
     const [properties, setProperties] = useState<IProperties[]>([]);
+    const [dateRent, setDataRent] = useState<ClientUser>({} as ClientUser);
     const [open, setOpen] = useState<boolean>(false);
     const [openEdit, setOpenEdit] = useState<boolean>(false);
+    const [file, setFileImage] = useState<File | null>(null);
     const [valuesRent, setValuesRent] = useState<IRegisterPropertySend>(defaultValuesRent);
 
     const openDialog = async (tableReturn: IFormReturn<IProperties>) => {
+
         const { data, action } = tableReturn;
+
+        if(data && data.autorizationId && data.idClient){
+            const saveDataRent: ClientUser = {
+                idClient: data.idClient,
+                idUser: data.autorizationId
+            }
+            setDataRent(saveDataRent);
+        }
 
         if (action == 'add') {
             setOpen(true);
@@ -50,7 +66,7 @@ export const Properties = () => {
     }
 
     const getFormTwo = async (propertyForm: IRegisterPropertySend | any, completed: boolean): Promise<void> => {
-        const parseNumber: string[] = ['rooms','bathrooms','squareMeters','typeRent','parking','hall','days','price'];
+        const parseNumber: string[] = ['rooms', 'bathrooms', 'squareMeters', 'typeRent', 'parking', 'hall', 'days', 'price'];
         propertyForm.idRent = valuesRent.idRent;
         parseNumber.map((par: string) => {
             propertyForm[par as NameProperties] = Number(propertyForm[par as NameProperties]);
@@ -66,7 +82,9 @@ export const Properties = () => {
         console.log(completed);
 
         const getReponse: BaseResponse = await putDataApiNormal('rent/data', propertyForm);
-        if(getReponse.success) {
+        await postFilesDataApi(`rent/image?nameRent=${propertyForm.nameRent}&idClient=${dateRent.idClient}&idUser=${dateRent.idUser}`, file as File);
+
+        if (getReponse.success) {
             setOpenEdit(false);
             getProperties();
         }
@@ -90,7 +108,7 @@ export const Properties = () => {
 
     useEffect(() => {
         const user = userToken();
-        if(user.roles.rol == 'Promotor'){
+        if (user.roles.rol == 'Promotor') {
             const copyColumns = columnsProperties.filter(col => col.column !== 'edit');
             setColumns(copyColumns);
         }
@@ -110,7 +128,7 @@ export const Properties = () => {
                 maxWidth={'lg'}
                 fullWidth={true}
             >
-                <RentUpdate resultForm={(property, completed) => getFormTwo(property, completed)} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}></RentUpdate>
+                <RentUpdate resultForm={(property, completed) => getFormTwo(property, completed)} setImageFile={setFileImage} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}></RentUpdate>
             </Dialog>
 
             <Dialog

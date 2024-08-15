@@ -13,7 +13,7 @@ export const Cards: FC<ICards> = ({ property }) => {
   return (
     <section onClick={() => goDetails(property.idRent)} className='w-[19rem] flex flex-col items-start justify-center bg-white text-white text-black rounded-md m-2 cursor-pointer' >
       <article className={`bg-cover bg-no-repeat bg-center w-full h-[15rem] rounded-md flex items-end justify-start p-2 relative`}>
-        <img src={`${property.images}`} alt="No se encontraron imagenes" className=" w-full h-full"/>
+        <img src={`../../../public/${property.images}`} alt="No se encontraron imagenes" className=" w-full h-full"/>
         <p className="font-bold absolute bottom-4 left-4 text-yellow-400  bg-gray-700 rounded-md p-2">{property.nameRent}</p>
       </article>
       <article className="flex flex-col items-start justify-start w-full p-2 text-black">
