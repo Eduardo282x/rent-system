@@ -37,7 +37,6 @@ export const BaseApi = async (action: actionsValid, data: any, body: any, keyWor
         response.close = true;
     }
     if (action == 'editApi') {
-        console.log('a editar ',data);
         await putDataApi(urlComponent, data[keyWord], data)
         response.close = true;
     }

@@ -16,19 +16,17 @@ export const StepOne: FC<IStepOne> = ({ resultForm, defaultValues, validationSch
     const { isValid } = useFormState({ control });
 
     const onSubmit = async (client: IRegisterClient) => {
-        if (isValid) {
-            resultForm(client);
-        }
+        resultForm(client);
     }
 
     React.useEffect(() => {
-        const subscription = watch((value, { name, type }) => {
-            if (isValid) {
-                handleSubmit(onSubmit)();
-            }
-        });
-        return () => subscription.unsubscribe();
-    }, [watch, handleSubmit]);
+        if(!btnSubmit){
+            const subscription = watch((value) => {
+                resultForm(value as IRegisterClient);
+            });
+            return () => subscription.unsubscribe();
+        }
+    }, [watch]);
 
 
     return (

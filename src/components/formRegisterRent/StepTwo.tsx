@@ -8,7 +8,7 @@ import { useDropzone } from 'react-dropzone';
 export const StepTwo: FC<IStepTwo> = ({ resultForm, defaultValues, validationSchame, setImageFile }) => {
     const [file, setFile] = useState<File | null>(null);
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm<IRegisterPropertySend>({
+    const { register, handleSubmit, control, formState: { errors }, trigger  } = useForm<IRegisterPropertySend>({
         defaultValues,
         resolver: zodResolver(validationSchame)
     });
@@ -154,7 +154,14 @@ export const StepTwo: FC<IStepTwo> = ({ resultForm, defaultValues, validationSch
 
                     <div className="flex flex-col justify-center items-start gap-2 w-full">
                         <label className='ml-1'>Precio (Bs)</label>
-                        <input type="number" className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2" placeholder="" {...register('price')} />
+                        <input type="number"
+                            className="w-full border-none outline-none bg-gray-100 rounded-md px-4 py-2"
+                            placeholder=""
+                            {...register('price', {valueAsNumber: true})}
+                            onChange={(e) => {
+                                register('price').onChange(e);
+                                trigger('price');
+                            }} />
                         {errors.price && <p className='text-red-500 text-sm ml-2'>{errors.price.message?.toString()}</p>}
                     </div>
 
