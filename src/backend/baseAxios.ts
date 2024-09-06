@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BaseResponse, ResponseLogin } from '../interfaces/base-response.interface';
+import { BaseResponse, ResponseLogin, UserData } from '../interfaces/base-response.interface';
 import { actionsValid } from '../interfaces/form.interface';
 import axiosInstance from './axios-instance';
 
@@ -13,9 +13,6 @@ export interface BaseApiReturn {
 }
 
 export const BaseApi = async (action: actionsValid, data: any, body: any, keyWord: string, urlComponent: string): Promise<BaseApiReturn> => {
-
-    console.log('al inicio: ',data);
-    
     const response: BaseApiReturn = {
         close: false,
         open: false,
@@ -40,9 +37,7 @@ export const BaseApi = async (action: actionsValid, data: any, body: any, keyWor
         response.close = true;
     }
     if (action == 'editApi') {
-        console.log(data);
-        
-        await putDataApi(urlComponent, data[keyWord],data)
+        await putDataApi(urlComponent, data[keyWord], data)
         response.close = true;
     }
 
@@ -57,6 +52,16 @@ export const getDataApi = (endpoint: string) => {
     })
 }
 
+export const getDataFileApi = (endpoint: string) => {
+    return axiosInstance.get(endpoint, {
+        responseType: 'blob'
+    }).then((response) => {
+        return response.data;
+    }).catch(err => {
+        return err.response.data;
+    })
+}
+
 export const getParamsDataApi = (endpoint: string, params: any) => {
     return axiosInstance.get(endpoint, {params}).then((response) => {
         return response.data;
@@ -65,8 +70,27 @@ export const getParamsDataApi = (endpoint: string, params: any) => {
     })
 }
 
-export const postDataApi = async (endpoint: string, data: any): Promise<ResponseLogin | BaseResponse> => {
+export const postDataApi = async (endpoint: string, data: any): Promise<ResponseLogin | BaseResponse | UserData | any> => {
     return await axiosInstance.post(endpoint, data).then((response) => {
+        return response.data;
+    }).catch((err) => {
+        return err.response.data;
+    })
+}
+export const postFilesDataApi = async (endpoint: string, file: File): Promise<ResponseLogin | BaseResponse> => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    return await axiosInstance.put(endpoint, formData, { headers: {
+        "Content-Type": "multipart/form-data",
+    },}).then((response) => {
+        return response.data;
+    }).catch((err) => {
+        return err.response.data;
+    })
+}
+export const postDataFileApi = async (endpoint: string, data: any): Promise<ResponseLogin | BaseResponse | UserData | any> => {
+    return await axiosInstance.post(endpoint, data, {responseType: 'blob'}).then((response) => {
         return response.data;
     }).catch((err) => {
         return err.response.data;
@@ -75,6 +99,13 @@ export const postDataApi = async (endpoint: string, data: any): Promise<Response
 
 export const putDataApi = async (endpoint: string,id: number, data: any): Promise<BaseResponse> => {
     return await axiosInstance.put(`${endpoint}/${id}`, data).then((response) => {
+        return response.data;
+    }).catch((err) => {
+        return err.response.data;
+    })
+}
+export const putDataApiNormal = async (endpoint: string, data: any): Promise<BaseResponse> => {
+    return await axiosInstance.put(`${endpoint}`, data).then((response) => {
         return response.data;
     }).catch((err) => {
         return err.response.data;

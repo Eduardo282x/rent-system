@@ -6,9 +6,13 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { filterBase, IFilter, PropsFilter, valuesFilter } from './filter.data';
+import { UserData } from '../../interfaces/base-response.interface';
+import { userToken } from '../../backend/authentication';
+import { formatMoney } from '../cards/cards.data';
 
 
-export const Filter: FC<PropsFilter> = ({btnFunc}) => {
+export const Filter: FC<PropsFilter> = ({ btnFunc, filterReturn }) => {
+    const userData : UserData = userToken();
     const [filter, setFilter] = React.useState<IFilter>(filterBase);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
@@ -19,9 +23,9 @@ export const Filter: FC<PropsFilter> = ({btnFunc}) => {
         changeFilter('type', event.target.value);
     };
 
-    const handleChangeLocation = (event: SelectChangeEvent) => {
-        changeFilter('location', event.target.value);
-    };
+    // const handleChangeLocation = (event: SelectChangeEvent) => {
+    //     changeFilter('location', event.target.value);
+    // };
 
     const handleChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
         changeFilter('search', event.target.value);
@@ -35,6 +39,7 @@ export const Filter: FC<PropsFilter> = ({btnFunc}) => {
             copyFilter[name] = value as number[];
         }
         setFilter(copyFilter);
+        filterReturn(copyFilter)
     }
 
 
@@ -59,10 +64,13 @@ export const Filter: FC<PropsFilter> = ({btnFunc}) => {
                     </div>
                 </div>
 
-                <button onClick={btnFunc} className="w-auto flex items-center justify-center rounded-md text-white font-bold p-2 gap-2 hover:bg-[#2c567c] transition-all">
-                    Agregar Propiedad
-                    <span className="material-icons">add_circle</span>
-                </button>
+
+                {userData.roles.rol == 'Gerente' &&
+                    <button onClick={btnFunc} className="w-auto flex items-center justify-center rounded-md text-white border-2 border-solid border-white font-bold p-2 gap-2 hover:bg-[#2c567c] transition-all">
+                        Registrar Propiedad
+                        <span className="material-icons">add_circle</span>
+                    </button>
+                }
             </div>
 
             <div className="flex items-center justify-start text-white w-full">
@@ -80,7 +88,7 @@ export const Filter: FC<PropsFilter> = ({btnFunc}) => {
                         <MenuItem value={'Apartamento'}>Apartamento</MenuItem>
                     </Select>
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 200 }}>
+                {/* <FormControl sx={{ m: 1, minWidth: 200 }}>
                     <InputLabel sx={{ color: '#fff' }}>Ubicación</InputLabel>
                     <Select
                         value={filter.location}
@@ -93,21 +101,22 @@ export const Filter: FC<PropsFilter> = ({btnFunc}) => {
                         <MenuItem value={'Maracaibo'}>Maracaibo</MenuItem>
                         <MenuItem value={'San Francisco'}>San Francisco</MenuItem>
                     </Select>
-                </FormControl>
+                </FormControl> */}
                 <Box sx={{ width: 250 }}>
                     <p>Rango de precio</p>
                     <div className="flex items-center justify-center gap-5">
-                        <p className='w-[5rem]'>{filter.price[0]}$</p>
+                        <p className='w-[5rem]'>{formatMoney(filter.price[0])}$</p>
                         <Slider
                             value={filter.price}
                             onChange={handleChange}
                             // color="''"
                             valueLabelDisplay="auto"
                             step={50}
-                            min={0}
-                            max={1000}
+                            min={2000}
+                            max={500000}
                         />
-                        <p >{filter.price[1]}$</p>
+                        
+                        <p >{formatMoney(filter.price[1])}$</p>
                     </div>
                 </Box>
             </div>

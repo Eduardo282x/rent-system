@@ -5,14 +5,20 @@ import { Login } from './pages/login/Login';
 import { Layout } from './pages/layout/Layout';
 import { Home } from './pages/home/Home';
 import { Users } from './pages/users/Users';
-// import { Sales } from './pages/sales/Sales';
-import { Contract } from './pages/contract/Contract';
 import { Rent } from './pages/rent/Rent';
+import { Properties } from './pages/properties/Properties';
+import useAxiosInterceptos from './interceptos/axiosInterceptos';
+import { History } from './pages/history/History';
+import { Backup } from './pages/backup/Backup';
 
 const router = createBrowserRouter([
   {
     path:'/',
     element: <Login/>
+  },
+  {
+    path:'/recuperar',
+    element: <Backup/>
   },
   {
     element: <Layout/>,
@@ -22,8 +28,12 @@ const router = createBrowserRouter([
         element: <Home></Home>
       },
       {
-        path: '/contratos',
-        element: <Contract></Contract>
+        path: '/propiedades',
+        element: <Properties></Properties>
+      },
+      {
+        path: '/historial',
+        element: <History></History>
       },
       {
         path: '/detalles/:id',
@@ -38,10 +48,12 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-
+  const snackbar = useAxiosInterceptos();
+  
   return (
     <div className='w-screen flex items-center justify-center'>
       <RouterProvider router={router}/>
+      {snackbar}
     </div>
   )
 }

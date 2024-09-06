@@ -4,6 +4,7 @@ import { postDataApi } from "../../backend/baseAxios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import { useForm } from "react-hook-form"
 import { useState } from "react";
 import './login.css';
@@ -13,6 +14,7 @@ export const Login = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('');
     const [open, setOpen] = useState<boolean>(false);
+    const [severityType, setSeverityType] = useState<boolean>(true);
 
     const handleClick = () => {
         setOpen(true);
@@ -35,6 +37,7 @@ export const Login = () => {
         const responseLogin: ResponseLogin = await postDataApi('auth', login) as ResponseLogin;
         handleClick();
         setMessage(responseLogin.message);
+        setSeverityType(responseLogin.success);
         if (responseLogin.success) {
             localStorage.setItem('token', JSON.stringify(responseLogin.token));
             setTimeout(() => {
@@ -60,19 +63,27 @@ export const Login = () => {
                             <span className="material-icons-outlined cursor-pointer text-black mx-2" onClick={() => setShowPassword((show) => !show)}>{!showPassword ? 'visibility' : 'visibility_off'}</span>
                         </div>
                     </div>
+                    <div className="flex items-center justify-between w-full">
+                        <span>¿Has olvidado la contraseña?</span>
+                        <span onClick={() => navigate('/recuperar')} className="hover:text-[#2c567c] text-[#0a2647] font-medium cursor-pointer hover:bg-gray-200 rounded-3xl px-4 py-2 transition-all">Recuperar contraseña</span>
+                    </div>
                     <button type='submit' className="w-full rounded-md text-white p-2 bg-[#0a2647] hover:bg-[#2c567c] transition-all">
                         Ingresar
                     </button>
                 </form>
             </div>
 
-            <Snackbar
-                open={open}
-                autoHideDuration={2000}
-                onClose={handleClose}
-                message={message}
-                anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
-            />
+
+            <Snackbar open={open} autoHideDuration={1500} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+                <Alert
+                    onClose={handleClose}
+                    severity={severityType ? 'success' : 'error'}
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    {message}
+                </Alert>
+            </Snackbar>
         </div>
     )
 }

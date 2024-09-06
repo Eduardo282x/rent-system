@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TableComponent } from '../../components/table/TableComponent'
 import { ICreateUser, columnsUsers, defaultValues, registerUser, userValidationSchame } from './users.data'
 import { IUsers } from '../../interfaces/users.interface';
@@ -28,45 +28,32 @@ export const Users = () => {
     setUsers(await getDataApi('users'))
   }
 
-  const openDialog = async (tableReturn: IFormReturn) => {
+  const openDialog = async (tableReturn: IFormReturn<ICreateUser>) => {
     const { data, action } = tableReturn;
 
     let responseBaseApi: BaseApiReturn;
 
-    if(data) {
+    if (data && action == 'addApi' || action == 'editApi') {
       data.identify = `${data.prefix}${data.identify}`;
       data.phone = `${data.prefixNumber}${data.phone}`;
     }
 
-    if(data && action == 'edit'){
-      
-      data.name = data.Name;
-      data.lastname = data.Lastname;
-      data.prefix = data.Identify.substring(0,1);
-      data.identify = data.Identify.substring(1);
-      data.phone = data.Phone.substring(4);
-      data.prefixNumber = data.Phone.substring(0,4);
-      data.email = data.Email;
-      data.civil = data.Civil;
-      data.rol = data.Rol;
-
-      console.log('parse data: ',data);
-      
-      responseBaseApi = await BaseApi(action,data, defaultValues ,'IdUsers','users');
+    if (data && action == 'edit') {
+      data.prefix = data.identify.substring(0, 1);
+      data.identify = data.identify.substring(2);
+      data.prefixNumber = data.phone.substring(0, 4);
+      data.phone = data.phone.substring(4);
+      responseBaseApi = await BaseApi(action, data, defaultValues, 'idUsers', 'users');
     } else {
-      responseBaseApi = await BaseApi(action,data, defaultValues ,'IdUsers','users');
+      responseBaseApi = await BaseApi(action, data, defaultValues, 'idUsers', 'users');
     }
-  
 
-    console.log('data  ',data);
-    
-    
     setBodyUsers(responseBaseApi.body as ICreateUser)
     setTitle(responseBaseApi.title);
     setAction(responseBaseApi.action);
-    if(responseBaseApi.open){handleClickOpen()}
-    if(responseBaseApi.close){handleClose()}
-    if(responseBaseApi){getUsersApi()}
+    if (responseBaseApi.open) { handleClickOpen() }
+    if (responseBaseApi.close) { handleClose() }
+    if (responseBaseApi) { getUsersApi() }
   }
 
   useEffect(() => {
@@ -74,9 +61,9 @@ export const Users = () => {
   }, [])
 
   return (
-    <div className='flex items-center justify-center text-black rounded-xl bg-[#0a2647] p-4 my-16'>
+    <div className='flex items-center justify-center text-white rounded-xl bg-[#0a2647] p-4 my-16'>
       {users.length > 0 && (
-        <TableComponent columns={columnsUsers} dataTable={users} openForm={openDialog}></TableComponent>
+        <TableComponent title={'Usuarios'} config={{ includeBtnAdd: true, includeFilter: true, textBtnAdd: 'Agregar Usuario', includeFilterDateRange: false }} columns={columnsUsers} dataTable={users} openForm={openDialog}></TableComponent>
       )}
 
       <Dialog
@@ -85,7 +72,7 @@ export const Users = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <FormUser title={title} action={action} dataForm={registerUser} defaultValues={bodyUsers} validationSchema={userValidationSchame} extra={'rol'} keyWordId={'IdUsers'} onSubmitForm={openDialog}></FormUser>
+        <FormUser title={title} action={action} dataForm={registerUser} defaultValues={bodyUsers} validationSchema={userValidationSchame} extra={'rol'} keyWordId={'idUsers'} onSubmitForm={openDialog}></FormUser>
       </Dialog>
     </div>
 

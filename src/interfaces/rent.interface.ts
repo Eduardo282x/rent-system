@@ -1,29 +1,44 @@
-export interface Properties {
-    IdRent:         number;
-    NameRent:       string;
-    Address:        string;
-    AddressDetails: string;
-    TypeRent:       number;
-    Rooms:          number;
-    Bathrooms:      number;
-    Price:          string | number;
-    SquareMeters:   string;
-    Images:         string;
-    IdClient:       number;
+export interface IProperties {
+    idRent:         number;
+    nameRent:       string;
+    address:        string;
+    addressDetails: string;
+    typeRent:       number;
+    rooms:          number;
+    bathrooms:      number;
+    hall:           number;
+    parking:        number;
+    north:          string;
+    east:           string;
+    west:           string;
+    south:          string;
+    info:           string;
+    price:          string | number;
+    days:           string | number;
+    squareMeters:   string | number;
+    images:         string;
+    nameType:       string;
+    idClient:       number;
+    autorizated:    boolean;
+    autorizationId: number;
     typerent:       Typerent;
+    client:         Client;
+    autorization:   Client;
+}
+
+export interface Client {
+    idUsers:  number;
+    name:     string;
+    lastname: string;
+    identify: string;
+    email:    string;
+    phone:    string;
+    password: string;
+    civil:    string;
+    rol:      number;
 }
 
 export interface Typerent {
-    IdType:   number;
-    NameType: string;
+    idType:   number;
+    nameType: string;
 }
-
-
-export interface IRegisterClient {
-    fullName: string;
-    identify: string;
-    phone: string;
-    email: string;
-}
-
-export type ITypesRegisterClient = 'fullName' |'identify' |'phone' |'email';

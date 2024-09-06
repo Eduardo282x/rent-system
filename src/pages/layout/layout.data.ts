@@ -1,23 +1,35 @@
+import { TypesRoles } from "../../interfaces/users.interface";
+
 export interface IMenu {
     title: string;
     redirect: string;
+    permisses: TypesRoles[];
     icon?: string;
 }
 
 export const menu: IMenu[] = [
     {
-        title: 'Propiedades',
+        title: 'Inicio',
         redirect: '/home',
-        icon: 'home'
+        icon: 'home',
+        permisses: ['Gerente', 'Promotor']
     },
     {
-        title: 'Contratos',
-        redirect: '/contratos',
-        icon: 'description'
+        title: 'Propiedades',
+        redirect: '/propiedades',
+        icon: 'apartment',
+        permisses: ['Gerente', 'Promotor']
+    },
+    {
+        title: 'Historial',
+        redirect: '/historial',
+        icon: 'description',
+        permisses: ['Gerente']
     },
     {
         title: 'Usuarios',
         redirect: '/usuarios',
-        icon: 'group'
+        icon: 'group',
+        permisses: ['Gerente']
     }
 ]

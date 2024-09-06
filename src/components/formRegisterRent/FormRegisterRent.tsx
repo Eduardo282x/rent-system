@@ -1,72 +1,93 @@
 
 import * as React from 'react';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
 import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
-import { IRegisterClient } from './stepOne.data';
-import { IRegisterProperty } from './stepTwo.data';
+import { IRegisterClient, IRegisterClientSend } from './stepOne.data';
+import { IRegisterPropertySend } from './stepTwo.data';
+import { defaultValuesClient, defaultValuesRent, registerClientWithoutValidationSchame, registerPropertyValidationSchame } from './formRegisterRent.data';
+import { postDataApi, postDataFileApi, postFilesDataApi } from '../../backend/baseAxios';
+import { Divider } from '@mui/material';
+import { userToken } from '../../backend/authentication';
+import { UserData } from '../../interfaces/base-response.interface';
 
-const steps = ['Datos del cliente', 'Datos de la inmobiliaria'];
+export interface IFormRegister {
+    handleClose(): void
+}
 
-export const FormRegisterRent = () => {
-    const [activeStep, setActiveStep] = React.useState(0);
+export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
+    const [valuesClient, setValuesClient] = React.useState<IRegisterClient>(defaultValuesClient);
+    const [valuesRent, setValuesRent] = React.useState<IRegisterPropertySend>(defaultValuesRent);
+    const [file, setFileImage] = React.useState<File | null>(null);
+    const userData: UserData = userToken();
 
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-    const sendInfo = () => {
-        console.log('Enviado');
+    const getFormOne = (clientForm: IRegisterClient): void => {
+        setValuesClient(clientForm as IRegisterClient);
     }
 
-    const getFormOne = (clientForm: IRegisterClient) : void => {
-        console.log(clientForm);
+    const getFormTwo = (propertyForm: IRegisterPropertySend, completed: boolean): void => {
+        setValuesRent(propertyForm);
+        if (completed) {
+            sendInfo(propertyForm);
+        }
     }
 
-    const getFormTwo = (propertyForm: IRegisterProperty) : void => {
-        console.log(propertyForm);
+    const sendInfo = async (property: IRegisterPropertySend): Promise<void> => {
+        const parseClient: IRegisterClientSend = {
+            name: valuesClient.name,
+            lastname: valuesClient.lastname,
+            identify: `${valuesClient.prefix}-${valuesClient.identify}`,
+            phone: `${valuesClient.prefixNumber}${valuesClient.phone}`,
+            email: valuesClient.email,
+            civil: valuesClient.civil,
+            rol: 3
+        };
+
+        const createUser = await postDataApi('users/return', parseClient);
+
+        const parseRent: IRegisterPropertySend = {
+            nameRent: property.nameRent,
+            address: property.address,
+            addressDetails: property.address,
+            images: 'https://assets.easybroker.com/property_images/1445843/21613488/EB-EN5843.jpg?version=1581143120',
+            idClient: createUser.idUsers,
+            squareMeters: Number(property.squareMeters),
+            rooms: Number(property.rooms),
+            bathrooms: Number(property.bathrooms),
+            price: Number(property.price),
+            parking: Number(property.parking),
+            hall: Number(property.hall),
+            info: property.info,
+            typeRent: Number(property.typeRent),
+            days: Number(property.days),
+            idUser: userData.idUsers,
+            avenue: property.avenue,
+            urbanization: property.urbanization
+        };
+
+        const createRent = await postDataFileApi('rent', parseRent);
+        await postFilesDataApi(`rent/image?nameRent=${property.nameRent}&idClient=${createUser.idUsers}&idUser=${userData.idUsers}`, file as File);
+
+        const url = window.URL.createObjectURL(createRent);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `Contrato de fe de venta - ${property.nameRent}.pdf`; // Cambia el nombre del archivo según tus necesidades
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        handleClose();
     }
 
 
     return (
         <div className='w-full h-[50rem] p-8'>
-            <Stepper activeStep={activeStep}>
-                {steps.map((label, index) => (
-                    <Step key={index}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
+            <StepOne resultForm={getFormOne} btnSubmit={false} defaultValues={valuesClient} validationSchame={registerClientWithoutValidationSchame}>
+            </StepOne>
 
-            {activeStep == 0 &&
-                <StepOne btnAction={handleNext} resultForm={getFormOne}>
-                </StepOne>
-            }
-            {activeStep == 1 &&
-                <StepTwo btnAction={sendInfo} resultForm={getFormTwo}>
-                </StepTwo>
-            }
+            <Divider />
 
-            <React.Fragment>
-                <div className="flex justify-between w-full pt-2">
-
-                    <Button disabled={activeStep === 0} variant='contained' onClick={handleBack}>
-                        Back
-                    </Button>
-
-                    <Button disabled={activeStep === 1} variant='contained' onClick={handleNext}>
-                        Next
-                    </Button>
-                </div>
-            </React.Fragment>
-
+            <StepTwo resultForm={(property, completed) => getFormTwo(property, completed)} setImageFile={setFileImage} defaultValues={valuesRent} validationSchame={registerPropertyValidationSchame}>
+            </StepTwo>
         </div>
     )
 }

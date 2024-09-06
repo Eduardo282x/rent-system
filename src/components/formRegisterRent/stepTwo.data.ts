@@ -1,59 +1,69 @@
-import { z } from "zod"
-// import { IForm } from "../../interfaces/form.interface";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export interface IStepTwo {
+    resultForm: (form: IRegisterPropertySend,completed: boolean) => void,
+    defaultValues: IRegisterPropertySend,
+    validationSchame: any,
+    setImageFile: any,
+}
 
-export const defaultValues = {
-    rooms: 0,
-    bathrooms: 0,
-    superface: 0,
-    type: '',
-    address: '',
-    price: 0,
-    north: 0,
-    east: 0,
-    west: 0,
-    south: 0,
-    info: '',
-    parking: 0,
-    hall: 0,
-}
-export const registerPropertyValidationSchame = z.object({
-    rooms: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    // rooms: z.number({ message: 'El campo es requerido' }),
-    bathrooms: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    // bathrooms: z.number({ message: 'El campo es requerido' }),
-    superface: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    // superface: z.number({ message: 'El campo es requerido' }),
-    type: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    address: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    price: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    // price: z.number({ message: 'El campo es requerido' }),
-    north: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    // north: z.number({ message: 'El campo es requerido' }),
-    east: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    // east: z.number({ message: 'El campo es requerido' }),
-    west: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    // west: z.number({ message: 'El campo es requerido' }),
-    south: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    // south: z.number({ message: 'El campo es requerido' }),
-    info: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    parking: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    // parking: z.number({ message: 'El campo es requerido' }),
-    hall: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    // hall: z.number({ message: 'El campo es requerido' }),
-})
 export interface  IRegisterProperty {
-    rooms: number,
-    bathrooms: number,
-    superface: number,
-    type: string,
-    address: string,
-    price: number,
-    north: number,
-    east: number,
-    west: number,
-    south: number,
-    info: string,
-    parking: number,
-    hall: number,
+    rooms: number;
+    bathrooms: number;
+    superface: number;
+    nameRent: string;
+    type: string;
+    address: string;
+    price: number;
+    north: number;
+    east: number;
+    west: number;
+    south: number;
+    info: string;
+    parking: number;
+    hall: number;
+
+    urbanization:string;
+    avenue: string;
+    days: number;
 }
-// export type ITypesRegisterClient = 'name' |'lastname' |'identify' |'phone' |'email' | 'civil' | 'prefixNumber';
+
+export interface  IRegisterPropertySend {
+    nameRent: string
+    address: string
+    urbanization: string
+    avenue: string
+    addressDetails: string
+    days: number;
+    typeRent: number;
+    rooms: number;
+    bathrooms: number;
+    hall: number;
+    parking: number;
+    info: string
+    price: number;
+    squareMeters: number;
+    images: string;
+    idUser: number;
+    idClient: number;
+    idRent?: number;
+}
+
+export type NameProperties =
+'nameRent'
+| 'address'
+| 'urbanization'
+| 'avenue'
+| 'addressDetails'
+| 'days'
+| 'typeRent'
+| 'rooms'
+| 'bathrooms'
+| 'hall'
+| 'parking'
+| 'info'
+| 'price'
+| 'squareMeters'
+| 'images'
+| 'idUser'
+| 'idClient'
+| 'idRent'

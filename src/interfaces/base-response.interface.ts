@@ -16,22 +16,22 @@ export interface ResponseLogin extends BaseResponse {
 }
 
 export interface UserData {
-    IdUsers:  number;
-    Name:     string;
-    Lastname: string;
-    Identify: string;
-    Email:    string;
-    Phone:    string;
-    Password: string;
-    Rol:      number;
+    idUsers:  number;
+    name:     string;
+    lastname: string;
+    identify: string;
+    email:    string;
+    phone:    string;
+    password: string;
+    rol:      number;
     roles:    Roles;
 }
 
 export interface Roles {
-    IdRol: number;
-    Rol:   typeRoles;
+    idRol: number;
+    rol:   typeRoles;
 }
 
-export type typeRoles = 'Administrador' | 'Vendedor' | 'Cliente';
+export type typeRoles = 'Gerente' | 'Promotor' | 'Cliente';
 
 

@@ -14,10 +14,10 @@ export interface IFormOptions {
     value: string | number;
 }
 
-export interface IFormReturn {
+export interface IFormReturn<T> {
     action: actionsValid;
-    data: any;
+    data: T;
 }
 
 type FormType = 'text' | 'number' | 'select' | 'checkbox' | 'prefix';
-export type actionsValid = 'edit' | 'add' | 'delete' | 'addApi' | 'editApi' | '';
+export type actionsValid = 'edit' | 'add' | 'delete' | 'addApi' | 'editApi' | '' | 'print' | 'filter';

@@ -3,10 +3,19 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { actionsValid } from '../../interfaces/form.interface';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export interface ITable {
-    dataTable: any[];
+export interface ITable<T> {
+    title: string;
+    dataTable: T[];
     columns: IColumns[];
-    openForm: (open: TableReturn) => void;
+    config: IConfigTable;
+    openForm: (open: TableReturn<T>) => void;
+}
+
+export interface IConfigTable {
+    includeFilter: boolean;
+    includeBtnAdd: boolean;
+    textBtnAdd: string;
+    includeFilterDateRange: boolean;
 }
 
 export interface IColumns {
@@ -20,9 +29,9 @@ export interface IColumns {
     width?: string;
 }
 
-export interface TableReturn{
+export interface TableReturn<T>{
     action: actionsValid;
-    data: any;
+    data: T;
 }
 export type Actions = 'edit' | 'delete';
 
@@ -36,3 +45,16 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
         fontSize: 14,
     },
 }));
+
+
+export const formatDate = (dateToFormat: string | Date | number): string => {
+    const date = new Date(dateToFormat);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
+}
+export const formatNumberWithDots = (number: number, suffix: string): string => {
+    return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}${suffix}`;
+}
