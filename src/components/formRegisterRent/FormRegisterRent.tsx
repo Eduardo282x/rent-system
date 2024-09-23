@@ -4,7 +4,7 @@ import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
 import { IRegisterClient, IRegisterClientSend } from './stepOne.data';
 import { IRegisterPropertySend } from './stepTwo.data';
-import { defaultValuesClient, defaultValuesRent, registerClientValidationSchame, registerPropertyValidationSchame } from './formRegisterRent.data';
+import { defaultValuesClient, defaultValuesRent, registerClientWithoutValidationSchame, registerPropertyValidationSchame } from './formRegisterRent.data';
 import { postDataApi, postDataFileApi, postFilesDataApi } from '../../backend/baseAxios';
 import { Divider } from '@mui/material';
 import { userToken } from '../../backend/authentication';
@@ -21,7 +21,7 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
     const userData: UserData = userToken();
 
     const getFormOne = (clientForm: IRegisterClient): void => {
-        setValuesClient(clientForm);
+        setValuesClient(clientForm as IRegisterClient);
     }
 
     const getFormTwo = (propertyForm: IRegisterPropertySend, completed: boolean): void => {
@@ -63,7 +63,7 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
             avenue: property.avenue,
             urbanization: property.urbanization
         };
-        
+
         const createRent = await postDataFileApi('rent', parseRent);
         await postFilesDataApi(`rent/image?nameRent=${property.nameRent}&idClient=${createUser.idUsers}&idUser=${userData.idUsers}`, file as File);
 
@@ -81,7 +81,7 @@ export const FormRegisterRent: React.FC<IFormRegister> = ({ handleClose }) => {
 
     return (
         <div className='w-full h-[50rem] p-8'>
-            <StepOne resultForm={getFormOne} btnSubmit={false} defaultValues={valuesClient} validationSchame={registerClientValidationSchame}>
+            <StepOne resultForm={getFormOne} btnSubmit={false} defaultValues={valuesClient} validationSchame={registerClientWithoutValidationSchame}>
             </StepOne>
 
             <Divider />

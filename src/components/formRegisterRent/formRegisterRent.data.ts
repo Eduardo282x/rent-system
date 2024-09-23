@@ -23,6 +23,9 @@ export const registerClientValidationSchame = z.object({
     civil: z.string().refine(text => text !== '', { message: 'El campo es requerido' })
 });
 
+export const registerClientWithoutValidationSchame = z.object({
+});
+
 export const defaultValuesRent: IRegisterPropertySend = {
     nameRent: '',
     rooms: 0,
@@ -50,7 +53,7 @@ export const registerPropertyValidationSchame = z.object({
     squareMeters: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     typeRent: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     address: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
-    price: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
+    price: z.number().min(2000, { message: 'El valor minimo de la propiedad debe ser 2000' }),
 
     info: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),
     parking: z.string().refine(text => text !== '', { message: 'El campo es requerido' }),

@@ -70,15 +70,7 @@ export const Properties = () => {
         propertyForm.idRent = valuesRent.idRent;
         parseNumber.map((par: string) => {
             propertyForm[par as NameProperties] = Number(propertyForm[par as NameProperties]);
-        })
-        // propertyForm.rooms = Number(propertyForm.rooms);
-        // propertyForm.bathrooms = Number(propertyForm.bathrooms);
-        // propertyForm.squareMeters = Number(propertyForm.squareMeters);
-        // propertyForm.typeRent = Number(propertyForm.typeRent);
-        // propertyForm.parking = Number(propertyForm.parking);
-        // propertyForm.hall = Number(propertyForm.hall);
-        // propertyForm.days = Number(propertyForm.days);
-        // propertyForm.price = Number(propertyForm.price);
+        });
         console.log(completed);
 
         const getReponse: BaseResponse = await putDataApiNormal('rent/data', propertyForm);

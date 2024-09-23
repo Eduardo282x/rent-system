@@ -33,6 +33,25 @@ export const TableComponent: FC<ITable<any>> = ({ title, dataTable, columns, con
         openForm(dataForm);
     }
 
+    const handleDateChange = (date: any) => {
+        setDateEnd(date);
+        filterDate(date);
+    };
+
+    const filterDate = (dateEndFast: any) => {
+        const datefil = {
+            dateStart: dateStart,
+            dateEnd: dateEndFast
+        }
+
+        const dataForm: TableReturn<any> = {
+            action: "filter",
+            data: datefil
+        }
+
+        openForm(dataForm)
+    }
+
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -62,8 +81,6 @@ export const TableComponent: FC<ITable<any>> = ({ title, dataTable, columns, con
 
     const getDates = (e: any) => {
         e.preventDefault();
-        console.log('Inicio: ', dateStart);
-        console.log('Fin: ', dateEnd);
     }
 
     useEffect(() => {
@@ -97,7 +114,7 @@ export const TableComponent: FC<ITable<any>> = ({ title, dataTable, columns, con
                                 <DatePicker
                                     sx={{ background: '#fff', borderRadius: '.2rem', width: '10rem' }}
                                     value={dateEnd}
-                                    onChange={(date) => setDateEnd(date)}
+                                    onChange={(date) => handleDateChange(date)}
                                 />
                             </LocalizationProvider>
                         </div>
